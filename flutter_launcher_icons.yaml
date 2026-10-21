@@ -1,0 +1,16 @@
+# Regenerate the platform icons after changing assets/icon/icon.png:
+#   dart run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: assets/icon/icon.png
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  # Android 8+ adaptive icon: the same artwork, inset so the launcher mask
+  # doesn't crop the arrows, over the artwork's own background colour.
+  adaptive_icon_background: "#0C8D83"
+  adaptive_icon_foreground: assets/icon/icon.png
+  adaptive_icon_foreground_inset: 16
+  web:
+    generate: true
+    background_color: "#0C8D83"
+    theme_color: "#00897B"
