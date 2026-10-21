@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:open_converter/app_state.dart';
+import 'package:open_converter/currency_kind.dart';
 import 'package:open_converter/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,6 +55,7 @@ void main() {
     state.toggleFavorite('chf');
     state.setDecimals(4);
     state.setZeroKeys(ZeroKeys.tripleZero);
+    state.setCurrencyFilter(CurrencyFilter.noCrypto);
     state.setLocale(const Locale('de'));
     final restored = AppState(prefs: await SharedPreferences.getInstance());
     await restored.load();
@@ -61,6 +63,7 @@ void main() {
     expect(restored.favorites, {'chf'});
     expect(restored.decimals, 4);
     expect(restored.zeroKeys, ZeroKeys.tripleZero);
+    expect(restored.currencyFilter, CurrencyFilter.noCrypto);
     expect(restored.locale, const Locale('de'));
   });
 
@@ -183,5 +186,34 @@ void main() {
     await tester.scrollUntilVisible(find.textContaining('No ads, no accounts'), 200);
     expect(find.text('Buy me a coffee'), findsNothing);
     debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets('currency picker labels and filters crypto', (tester) async {
+    // Offline, so the bundled rates (with crypto) aren't replaced by the mock.
+    final state = (await tester.runAsync(() => testState(online: false)))!;
+    await tester.pumpWidget(ConverterApp(state: state));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add currency'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(SearchBar), 'bitcoin');
+    await tester.pump();
+    expect(find.text('BTC'), findsWidgets);
+    expect(find.text('Crypto'), findsWidgets);
+
+    await tester.tap(find.text('No crypto'));
+    await tester.pumpAndSettle();
+    expect(find.text('BTC'), findsNothing);
+
+    await tester.enterText(find.byType(SearchBar), 'bbd');
+    await tester.pump();
+    expect(find.text('BBD'), findsWidgets);
+    expect(find.text('Fiat'), findsOneWidget);
+
+    await tester.tap(find.text('Crypto only'));
+    await tester.pumpAndSettle();
+    expect(find.text('BBD'), findsNothing);
+    await tester.tap(find.text('No crypto'));
+    await tester.pumpAndSettle();
+    expect(state.currencyFilter, CurrencyFilter.noCrypto);
   });
 }

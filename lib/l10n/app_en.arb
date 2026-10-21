@@ -166,6 +166,30 @@
   "@notFound": {
     "description": "Shown when a search matches no currencies."
   },
+  "filterAll": "All",
+  "@filterAll": {
+    "description": "Currency list filter: show every currency."
+  },
+  "filterNoCrypto": "No crypto",
+  "@filterNoCrypto": {
+    "description": "Currency list filter: hide cryptocurrencies."
+  },
+  "filterCryptoOnly": "Crypto only",
+  "@filterCryptoOnly": {
+    "description": "Currency list filter: show only cryptocurrencies."
+  },
+  "kindFiat": "Fiat",
+  "@kindFiat": {
+    "description": "Short tag on a government-issued currency such as USD or EUR."
+  },
+  "kindCrypto": "Crypto",
+  "@kindCrypto": {
+    "description": "Short tag on a cryptocurrency such as BTC."
+  },
+  "kindMetal": "Metal",
+  "@kindMetal": {
+    "description": "Short tag on a precious metal such as gold (XAU)."
+  },
   "addToFavorites": "Add to favorites",
   "@addToFavorites": {
     "description": "Tooltip for the star button; favourites are listed first in the currency picker."

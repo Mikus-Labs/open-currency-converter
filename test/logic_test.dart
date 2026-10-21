@@ -1,11 +1,31 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:open_converter/currency_kind.dart';
 import 'package:open_converter/expression.dart';
 import 'package:open_converter/format.dart';
 import 'package:open_converter/l10n/app_localizations.dart';
 import 'package:open_converter/rates.dart';
 
 void main() {
+  group('currency kind', () {
+    test('classifies fiat, crypto and metals', () {
+      expect(kindOf('usd'), CurrencyKind.fiat);
+      expect(kindOf('dem'), CurrencyKind.fiat); // withdrawn
+      expect(kindOf('btc'), CurrencyKind.crypto);
+      expect(kindOf('usdt'), CurrencyKind.crypto);
+      expect(kindOf('xau'), CurrencyKind.metal);
+      expect(kindOf('somenewtoken'), CurrencyKind.crypto);
+    });
+
+    test('filters', () {
+      expect(CurrencyFilter.all.matches('btc'), isTrue);
+      expect(CurrencyFilter.noCrypto.matches('btc'), isFalse);
+      expect(CurrencyFilter.noCrypto.matches('xau'), isTrue);
+      expect(CurrencyFilter.cryptoOnly.matches('btc'), isTrue);
+      expect(CurrencyFilter.cryptoOnly.matches('eur'), isFalse);
+    });
+  });
+
   group('evaluate', () {
     test('respects precedence', () {
       expect(evaluate('2+3×4'), 14);

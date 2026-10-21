@@ -124,6 +124,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String get notFound => 'Ничего не найдено';
 
   @override
+  String get filterAll => 'Все';
+
+  @override
+  String get filterNoCrypto => 'Без крипто';
+
+  @override
+  String get filterCryptoOnly => 'Только крипто';
+
+  @override
+  String get kindFiat => 'Фиат';
+
+  @override
+  String get kindCrypto => 'Крипто';
+
+  @override
+  String get kindMetal => 'Металл';
+
+  @override
   String get addToFavorites => 'Добавить в избранное';
 
   @override

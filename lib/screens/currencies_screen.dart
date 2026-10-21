@@ -32,7 +32,7 @@ class CurrenciesScreen extends StatelessWidget {
           return ListTile(
             key: ValueKey(code),
             leading: CurrencyBadge(code),
-            title: Text(code.toUpperCase()),
+            title: CurrencyTitle(code),
             subtitle: Text(state.nameOf(code)),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,

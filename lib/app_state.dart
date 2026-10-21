@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'currency_kind.dart';
 import 'expression.dart' as calc;
 import 'format.dart';
 import 'l10n/app_localizations.dart';
@@ -55,6 +56,7 @@ class AppState extends ChangeNotifier {
   int decimals = 2;
   bool haptics = true;
   ZeroKeys zeroKeys = ZeroKeys.both;
+  CurrencyFilter currencyFilter = CurrencyFilter.all;
   ThemeMode themeMode = ThemeMode.system;
 
   /// App language, or null to follow the device.
@@ -100,6 +102,7 @@ class AppState extends ChangeNotifier {
     decimals = json['decimals'] as int? ?? 2;
     haptics = json['haptics'] as bool? ?? true;
     zeroKeys = ZeroKeys.values.asNameMap()[json['zeroKeys']] ?? ZeroKeys.both;
+    currencyFilter = CurrencyFilter.values.asNameMap()[json['currencyFilter']] ?? CurrencyFilter.all;
     themeMode = ThemeMode.values[json['themeMode'] as int? ?? 0];
     locale = AppLocalizations.supportedLocales.where((l) => l.toLanguageTag() == json['locale']).firstOrNull;
   }
@@ -117,6 +120,7 @@ class AppState extends ChangeNotifier {
         'decimals': decimals,
         'haptics': haptics,
         'zeroKeys': zeroKeys.name,
+        'currencyFilter': currencyFilter.name,
         'themeMode': themeMode.index,
         'locale': locale?.toLanguageTag(),
       }),
@@ -314,6 +318,11 @@ class AppState extends ChangeNotifier {
 
   void setZeroKeys(ZeroKeys value) {
     zeroKeys = value;
+    _changed();
+  }
+
+  void setCurrencyFilter(CurrencyFilter value) {
+    currencyFilter = value;
     _changed();
   }
 

@@ -117,6 +117,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get notFound => '未找到';
 
   @override
+  String get filterAll => '全部';
+
+  @override
+  String get filterNoCrypto => '不含加密货币';
+
+  @override
+  String get filterCryptoOnly => '仅加密货币';
+
+  @override
+  String get kindFiat => '法币';
+
+  @override
+  String get kindCrypto => '加密';
+
+  @override
+  String get kindMetal => '贵金属';
+
+  @override
   String get addToFavorites => '添加到收藏';
 
   @override

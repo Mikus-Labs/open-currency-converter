@@ -117,6 +117,24 @@ class AppLocalizationsTh extends AppLocalizations {
   String get notFound => 'ไม่พบผลลัพธ์';
 
   @override
+  String get filterAll => 'ทั้งหมด';
+
+  @override
+  String get filterNoCrypto => 'ไม่รวมคริปโต';
+
+  @override
+  String get filterCryptoOnly => 'เฉพาะคริปโต';
+
+  @override
+  String get kindFiat => 'เงินตรา';
+
+  @override
+  String get kindCrypto => 'คริปโต';
+
+  @override
+  String get kindMetal => 'โลหะ';
+
+  @override
   String get addToFavorites => 'เพิ่มในรายการโปรด';
 
   @override
