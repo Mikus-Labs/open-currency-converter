@@ -34,6 +34,10 @@ flutter build apk      # needs the Android SDK (Android Studio)
 flutter build ios      # needs Xcode
 ```
 
+CI runs format, analyze and tests on every push. Store builds (signed AAB,
+APK and IPA) come from pushing a `vX.Y.Z` tag; see
+[docs/RELEASING.md](docs/RELEASING.md) for the one-time signing setup.
+
 Code layout:
 
 | File | Purpose |
