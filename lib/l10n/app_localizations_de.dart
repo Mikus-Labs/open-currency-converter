@@ -183,6 +183,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get keypadVibration => 'Tastenvibration';
 
   @override
+  String get zeroKeys => 'Nulltasten';
+
+  @override
   String get theme => 'Design';
 
   @override
@@ -193,6 +196,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get themeDark => 'Dunkel';
+
+  @override
+  String get language => 'Sprache';
+
+  @override
+  String get languageName => 'Deutsch';
+
+  @override
+  String get languageSystem => 'Systemstandard';
 
   @override
   String ratesBuiltIn(String date) {
@@ -218,4 +230,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get aboutRates =>
       'Die Kurse stammen aus der freien, offenen fawazahmed0 currency-api (CC0) und werden täglich aktualisiert. Es sind Referenzkurse nur zur Information, keine Handelskurse.\n\nKeine Werbung, keine Konten, kein Tracking.';
+
+  @override
+  String get donate => 'Spendier mir einen Kaffee';
+
+  @override
+  String get donateSubtitle => 'Kostenlos und werbefrei. Spenden helfen, dass es so bleibt.';
+
+  @override
+  String get linkError => 'Link konnte nicht geöffnet werden';
 }

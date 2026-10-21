@@ -190,6 +190,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get keypadVibration => 'Вибрация клавиатуры';
 
   @override
+  String get zeroKeys => 'Клавиши нулей';
+
+  @override
   String get theme => 'Тема';
 
   @override
@@ -200,6 +203,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get themeDark => 'Тёмная';
+
+  @override
+  String get language => 'Язык';
+
+  @override
+  String get languageName => 'Русский';
+
+  @override
+  String get languageSystem => 'Как в системе';
 
   @override
   String ratesBuiltIn(String date) {
@@ -225,4 +237,13 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get aboutRates =>
       'Курсы берутся из бесплатного открытого fawazahmed0 currency-api (CC0) и обновляются ежедневно. Это справочные курсы только для информации, а не торговые котировки.\n\nБез рекламы, аккаунтов и слежки.';
+
+  @override
+  String get donate => 'Угостить кофе';
+
+  @override
+  String get donateSubtitle => 'Бесплатно и без рекламы. Ваша поддержка помогает сохранить это.';
+
+  @override
+  String get linkError => 'Не удалось открыть ссылку';
 }

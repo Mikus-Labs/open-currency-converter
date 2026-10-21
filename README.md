@@ -13,9 +13,11 @@ No ads, no subscriptions, no accounts, no tracking.
 - Own rates: override a market rate with your bank's or exchange office's
 - Works offline: last downloaded rates are cached and a snapshot ships with
   the app; rates refresh automatically when older than 6 hours
-- Share the current conversion, decimal places, light/dark theme, haptics
+- Share the current conversion, decimal places, light/dark theme, haptics,
+  `000`/`00` keypad keys
 - Phones and tablets, portrait and landscape
-- English, Arabic, Chinese, French, German, Russian, Spanish and Thai
+- English, Arabic, Chinese, French, German, Russian, Spanish and Thai,
+  following the device or picked in Settings
 
 ## Exchange rates
 
@@ -58,6 +60,11 @@ UI text lives in `lib/l10n/app_en.arb`; adding a language is one translated
 file plus `dart run tool/l10n.dart`. See [docs/LOCALISATION.md](docs/LOCALISATION.md).
 
 Planned work is in [TODO.md](TODO.md).
+
+## Support the project
+
+Converter is free, with no ads and no subscriptions. If it's useful to you,
+you can [buy me a coffee](https://buymeacoffee.com/) <!-- TODO: real link -->.
 
 ## Privacy and licence
 

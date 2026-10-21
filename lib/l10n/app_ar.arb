@@ -49,14 +49,21 @@
   "decimalPlaces": "المنازل العشرية",
   "decimalPlacesSubtitle": "المبالغ الأقل من 1 تحتفظ دائمًا بـ 3 أرقام معنوية",
   "keypadVibration": "اهتزاز لوحة المفاتيح",
+  "zeroKeys": "مفاتيح الأصفار",
   "theme": "المظهر",
   "themeSystem": "النظام",
   "themeLight": "فاتح",
   "themeDark": "داكن",
+  "language": "اللغة",
+  "languageName": "العربية",
+  "languageSystem": "لغة النظام",
   "ratesBuiltIn": "أسعار مدمجة دون اتصال بتاريخ {date}",
   "ratesDownloaded": "أسعار {date}، تم تنزيلها {age}",
   "refreshNow": "تحديث الآن",
   "ratesRefreshed": "تم تحديث الأسعار",
   "offlineError": "لا يوجد اتصال. يتم عرض أسعار {date}.",
-  "aboutRates": "تأتي الأسعار من واجهة fawazahmed0 currency-api المجانية والمفتوحة (CC0) وتُحدَّث يوميًا. وهي أسعار مرجعية للعلم فقط، وليست أسعار تداول.\n\nبلا إعلانات، بلا حسابات، بلا تتبع."
+  "aboutRates": "تأتي الأسعار من واجهة fawazahmed0 currency-api المجانية والمفتوحة (CC0) وتُحدَّث يوميًا. وهي أسعار مرجعية للعلم فقط، وليست أسعار تداول.\n\nبلا إعلانات، بلا حسابات، بلا تتبع.",
+  "donate": "اشترِ لي قهوة",
+  "donateSubtitle": "مجاني وبدون إعلانات. دعمك يساعد على إبقائه كذلك.",
+  "linkError": "تعذّر فتح الرابط"
 }

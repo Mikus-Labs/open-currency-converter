@@ -182,6 +182,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get keypadVibration => '按键振动';
 
   @override
+  String get zeroKeys => '零键';
+
+  @override
   String get theme => '主题';
 
   @override
@@ -192,6 +195,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get themeDark => '深色';
+
+  @override
+  String get language => '语言';
+
+  @override
+  String get languageName => '简体中文';
+
+  @override
+  String get languageSystem => '跟随系统';
 
   @override
   String ratesBuiltIn(String date) {
@@ -216,4 +228,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutRates => '汇率来自免费开放的 fawazahmed0 currency-api（CC0），每日更新。仅供参考，并非交易报价。\n\n无广告、无账户、无跟踪。';
+
+  @override
+  String get donate => '请我喝杯咖啡';
+
+  @override
+  String get donateSubtitle => '免费且无广告。您的支持让它保持下去。';
+
+  @override
+  String get linkError => '无法打开链接';
 }

@@ -49,14 +49,21 @@
   "decimalPlaces": "Décimales",
   "decimalPlacesSubtitle": "Les montants inférieurs à 1 gardent toujours 3 chiffres significatifs",
   "keypadVibration": "Vibration du clavier",
+  "zeroKeys": "Touches zéro",
   "theme": "Thème",
   "themeSystem": "Système",
   "themeLight": "Clair",
   "themeDark": "Sombre",
+  "language": "Langue",
+  "languageName": "Français",
+  "languageSystem": "Langue du système",
   "ratesBuiltIn": "Taux hors ligne intégrés du {date}",
   "ratesDownloaded": "Taux du {date}, téléchargés {age}",
   "refreshNow": "Actualiser",
   "ratesRefreshed": "Taux mis à jour",
   "offlineError": "Pas de connexion. Affichage des taux du {date}.",
-  "aboutRates": "Les taux proviennent de l’API libre et gratuite fawazahmed0 currency-api (CC0) et sont mis à jour chaque jour. Ce sont des taux de référence donnés à titre indicatif, pas des cotations de marché.\n\nSans publicité, sans compte, sans pistage."
+  "aboutRates": "Les taux proviennent de l’API libre et gratuite fawazahmed0 currency-api (CC0) et sont mis à jour chaque jour. Ce sont des taux de référence donnés à titre indicatif, pas des cotations de marché.\n\nSans publicité, sans compte, sans pistage.",
+  "donate": "Offrez-moi un café",
+  "donateSubtitle": "Gratuit et sans publicité. Vos dons aident à le rester.",
+  "linkError": "Impossible d'ouvrir le lien"
 }

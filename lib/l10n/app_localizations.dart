@@ -401,6 +401,12 @@ abstract class AppLocalizations {
   /// **'Keypad vibration'**
   String get keypadVibration;
 
+  /// Setting: which multi-zero keys (000 and 00) the keypad shows next to 0.
+  ///
+  /// In en, this message translates to:
+  /// **'Zero keys'**
+  String get zeroKeys;
+
   /// Setting: light or dark appearance.
   ///
   /// In en, this message translates to:
@@ -424,6 +430,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get themeDark;
+
+  /// Setting: the language of the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// The name of this language, written in this language. Shown in the language setting.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageName;
+
+  /// Language setting option: follow the device language.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get languageSystem;
 
   /// Exchange rates status when rates have never been downloaded. {date} is the rates date (YYYY-MM-DD).
   ///
@@ -460,6 +484,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rates come from the free, open fawazahmed0 currency-api (CC0) and are updated daily. They are reference rates for information only, not trading quotes.\n\nNo ads, no accounts, no tracking.'**
   String get aboutRates;
+
+  /// Settings entry that opens the donation page.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy me a coffee'**
+  String get donate;
+
+  /// Subtitle of the donation entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Free and ad-free. Tips help keep it that way.'**
+  String get donateSubtitle;
+
+  /// Error when a web link could not be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the link'**
+  String get linkError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

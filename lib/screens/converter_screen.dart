@@ -100,7 +100,7 @@ class ConverterScreen extends StatelessWidget {
                 ),
               ),
             );
-            final keypad = Keypad(onKey: state.press);
+            final keypad = Keypad(zeroKeys: state.zeroKeys, onKey: state.press);
 
             // Landscape: currencies beside a full-height keypad.
             if (constraints.maxWidth > constraints.maxHeight) {
@@ -296,17 +296,27 @@ class _ConverterRow extends StatelessWidget {
 /// Calculator keypad that fills the space it is given. Long-press backspace
 /// to clear.
 class Keypad extends StatelessWidget {
-  const Keypad({super.key, required this.onKey});
+  const Keypad({super.key, required this.zeroKeys, required this.onKey});
 
+  final ZeroKeys zeroKeys;
   final ValueChanged<String> onKey;
 
   // A cell with several space-separated keys is split into half-width keys.
-  static const _rows = [
+  List<List<String>> get _rows => [
     ['C', '%', '⌫', '÷'],
     ['7', '8', '9', '×'],
     ['4', '5', '6', '−'],
     ['1', '2', '3', '+'],
-    ['000 00', '0', '.', '='],
+    [
+      switch (zeroKeys) {
+        ZeroKeys.both => '000 00',
+        ZeroKeys.doubleZero => '00',
+        ZeroKeys.tripleZero => '000',
+      },
+      '0',
+      '.',
+      '=',
+    ],
   ];
 
   @override

@@ -52,11 +52,15 @@ void main() {
     state.addCurrency('chf');
     state.toggleFavorite('chf');
     state.setDecimals(4);
+    state.setZeroKeys(ZeroKeys.tripleZero);
+    state.setLocale(const Locale('de'));
     final restored = AppState(prefs: await SharedPreferences.getInstance());
     await restored.load();
     expect(restored.selected.last, 'chf');
     expect(restored.favorites, {'chf'});
     expect(restored.decimals, 4);
+    expect(restored.zeroKeys, ZeroKeys.tripleZero);
+    expect(restored.locale, const Locale('de'));
   });
 
   test('reorder keeps the active currency active', () async {
@@ -133,5 +137,36 @@ void main() {
     await tester.tap(find.text('Exchange rates'));
     await tester.pumpAndSettle();
     expect(find.text('1 USD'), findsOneWidget);
+  });
+
+  testWidgets('settings change the zero keys and the language', (tester) async {
+    final state = (await tester.runAsync(testState))!;
+    await tester.pumpWidget(ConverterApp(state: state));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(PopupMenuButton<Widget>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('00').last);
+    await tester.pumpAndSettle();
+    expect(state.zeroKeys, ZeroKeys.doubleZero);
+
+    await tester.tap(find.text('System default'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Deutsch').last);
+    await tester.pumpAndSettle();
+    expect(state.locale, const Locale('de'));
+    expect(find.text('Einstellungen'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Spendier mir einen Kaffee'), 200);
+
+    Navigator.of(tester.element(find.text('Einstellungen'))).pop();
+    await tester.pumpAndSettle();
+    expect(find.text('00'), findsOneWidget);
+    expect(find.text('000'), findsNothing);
+    state.setZeroKeys(ZeroKeys.tripleZero);
+    await tester.pump();
+    expect(find.text('000'), findsOneWidget);
+    expect(find.text('00'), findsNothing);
   });
 }

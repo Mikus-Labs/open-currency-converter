@@ -182,6 +182,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get keypadVibration => 'สั่นเมื่อกดแป้น';
 
   @override
+  String get zeroKeys => 'ปุ่มศูนย์';
+
+  @override
   String get theme => 'ธีม';
 
   @override
@@ -192,6 +195,15 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get themeDark => 'มืด';
+
+  @override
+  String get language => 'ภาษา';
+
+  @override
+  String get languageName => 'ไทย';
+
+  @override
+  String get languageSystem => 'ตามระบบ';
 
   @override
   String ratesBuiltIn(String date) {
@@ -217,4 +229,13 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get aboutRates =>
       'อัตรามาจาก fawazahmed0 currency-api ซึ่งใช้ได้ฟรีและเป็นข้อมูลเปิด (CC0) และอัปเดตทุกวัน เป็นอัตราอ้างอิงเพื่อเป็นข้อมูลเท่านั้น ไม่ใช่ราคาซื้อขาย\n\nไม่มีโฆษณา ไม่ต้องมีบัญชี ไม่มีการติดตาม';
+
+  @override
+  String get donate => 'เลี้ยงกาแฟฉันสักแก้ว';
+
+  @override
+  String get donateSubtitle => 'ฟรีและไม่มีโฆษณา การสนับสนุนของคุณช่วยให้เป็นเช่นนี้ต่อไป';
+
+  @override
+  String get linkError => 'เปิดลิงก์ไม่ได้';
 }

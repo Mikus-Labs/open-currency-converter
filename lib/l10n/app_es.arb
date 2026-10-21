@@ -49,14 +49,21 @@
   "decimalPlaces": "Decimales",
   "decimalPlacesSubtitle": "Los importes menores que 1 siempre conservan 3 cifras significativas",
   "keypadVibration": "Vibración del teclado",
+  "zeroKeys": "Teclas de ceros",
   "theme": "Tema",
   "themeSystem": "Sistema",
   "themeLight": "Claro",
   "themeDark": "Oscuro",
+  "language": "Idioma",
+  "languageName": "Español",
+  "languageSystem": "Predeterminado del sistema",
   "ratesBuiltIn": "Tasas sin conexión integradas del {date}",
   "ratesDownloaded": "Tasas del {date}, descargadas {age}",
   "refreshNow": "Actualizar ahora",
   "ratesRefreshed": "Tasas actualizadas",
   "offlineError": "Sin conexión. Se muestran las tasas del {date}.",
-  "aboutRates": "Las tasas proceden de la API libre y gratuita fawazahmed0 currency-api (CC0) y se actualizan a diario. Son tasas de referencia solo a título informativo, no cotizaciones para operar.\n\nSin anuncios, sin cuentas, sin rastreo."
+  "aboutRates": "Las tasas proceden de la API libre y gratuita fawazahmed0 currency-api (CC0) y se actualizan a diario. Son tasas de referencia solo a título informativo, no cotizaciones para operar.\n\nSin anuncios, sin cuentas, sin rastreo.",
+  "donate": "Invítame a un café",
+  "donateSubtitle": "Gratis y sin anuncios. Tu apoyo ayuda a que siga así.",
+  "linkError": "No se pudo abrir el enlace"
 }

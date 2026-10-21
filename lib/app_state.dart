@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'expression.dart' as calc;
 import 'format.dart';
+import 'l10n/app_localizations.dart';
 import 'rates.dart';
 
 /// A user-entered rate: 1 [base] = [value] of the overridden currency.
@@ -19,6 +20,9 @@ class OwnRate {
   factory OwnRate.fromJson(Map<String, dynamic> json) =>
       OwnRate(base: json['base'] as String, value: (json['value'] as num).toDouble());
 }
+
+/// Which multi-zero keys the keypad shows beside 0.
+enum ZeroKeys { both, doubleZero, tripleZero }
 
 class AppState extends ChangeNotifier {
   AppState({RatesService? service, this._prefs}) : _service = service ?? RatesService();
@@ -50,7 +54,11 @@ class AppState extends ChangeNotifier {
   bool useOwnRates = true;
   int decimals = 2;
   bool haptics = true;
+  ZeroKeys zeroKeys = ZeroKeys.both;
   ThemeMode themeMode = ThemeMode.system;
+
+  /// App language, or null to follow the device.
+  Locale? locale;
 
   Future<void> load() async {
     final prefs = _prefs ??= await SharedPreferences.getInstance();
@@ -91,7 +99,9 @@ class AppState extends ChangeNotifier {
     useOwnRates = json['useOwnRates'] as bool? ?? true;
     decimals = json['decimals'] as int? ?? 2;
     haptics = json['haptics'] as bool? ?? true;
+    zeroKeys = ZeroKeys.values.asNameMap()[json['zeroKeys']] ?? ZeroKeys.both;
     themeMode = ThemeMode.values[json['themeMode'] as int? ?? 0];
+    locale = AppLocalizations.supportedLocales.where((l) => l.toLanguageTag() == json['locale']).firstOrNull;
   }
 
   void _save() {
@@ -106,7 +116,9 @@ class AppState extends ChangeNotifier {
         'useOwnRates': useOwnRates,
         'decimals': decimals,
         'haptics': haptics,
+        'zeroKeys': zeroKeys.name,
         'themeMode': themeMode.index,
+        'locale': locale?.toLanguageTag(),
       }),
     );
   }
@@ -300,8 +312,18 @@ class AppState extends ChangeNotifier {
     _changed();
   }
 
+  void setZeroKeys(ZeroKeys value) {
+    zeroKeys = value;
+    _changed();
+  }
+
   void setThemeMode(ThemeMode mode) {
     themeMode = mode;
+    _changed();
+  }
+
+  void setLocale(Locale? value) {
+    locale = value;
     _changed();
   }
 }
