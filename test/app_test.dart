@@ -1,34 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
 import 'package:open_converter/app_state.dart';
 import 'package:open_converter/main.dart';
-import 'package:open_converter/rates.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _rates = '{"date":"2026-10-20","usd":{"usd":1,"eur":0.9,"gbp":0.75,"jpy":150,"cny":7}}';
-const _names = '{"usd":"US Dollar","eur":"Euro","gbp":"British Pound","jpy":"Japanese Yen","cny":"Chinese Yuan"}';
-
-Future<AppState> _state({bool online = true}) async {
-  SharedPreferences.setMockInitialValues({});
-  final client = MockClient((req) async {
-    if (!online) throw http.ClientException('offline');
-    return http.Response(req.url.path.endsWith('/usd.min.json') ? _rates : _names, 200);
-  });
-  final state = AppState(
-    service: RatesService(client: client),
-    prefs: await SharedPreferences.getInstance(),
-  );
-  await state.load();
-  return state;
-}
+import 'support.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('loads bundled rates, then refreshes from the API', () async {
-    final state = await _state();
+    final state = await testState();
     expect(state.fetchedAt, isNull);
     expect(state.snapshot.rates.length, greaterThan(100));
     expect(await state.refresh(), isTrue);
@@ -37,14 +19,14 @@ void main() {
   });
 
   test('offline refresh keeps rates and reports an error', () async {
-    final state = await _state(online: false);
+    final state = await testState(online: false);
     final before = state.snapshot;
     expect(await state.refresh(), isFalse);
     expect(state.snapshot, same(before));
   });
 
   test('converts, switches rows and honours own rates', () async {
-    final state = await _state();
+    final state = await testState();
     await state.refresh();
     state.press('C');
     for (final k in ['1', '0', '0']) {
@@ -66,7 +48,7 @@ void main() {
   });
 
   test('state persists across restarts', () async {
-    final state = await _state();
+    final state = await testState();
     state.addCurrency('chf');
     state.toggleFavorite('chf');
     state.setDecimals(4);
@@ -78,7 +60,7 @@ void main() {
   });
 
   test('reorder keeps the active currency active', () async {
-    final state = await _state();
+    final state = await testState();
     state.setActive(2); // gbp
     state.reorder(2, 0);
     expect(state.selected.first, 'gbp');
@@ -86,7 +68,7 @@ void main() {
   });
 
   test('removing the active row carries the amount over', () async {
-    final state = await _state();
+    final state = await testState();
     await state.refresh();
     state.press('C');
     state.press('1');
@@ -101,7 +83,7 @@ void main() {
 
   testWidgets('keypad drives the converter', (tester) async {
     // Asset and prefs loading is real I/O, which must run outside fake async.
-    final state = (await tester.runAsync(_state))!;
+    final state = (await tester.runAsync(testState))!;
     await tester.pumpWidget(ConverterApp(state: state));
     await tester.pumpAndSettle();
 

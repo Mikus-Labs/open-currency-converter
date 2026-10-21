@@ -100,4 +100,7 @@ a year; renew them and update the two base64 secrets.
   Play *Data safety* is "No data collected" and App Store *App Privacy* is
   "Data Not Collected". Export compliance is pre-answered:
   `ITSAppUsesNonExemptEncryption` is `false`, since the app only uses HTTPS.
-- **Screenshots and store listing text** for each store.
+- **Screenshots and store listing text** for each store. The app supports
+  tablets in both orientations, so the App Store also needs iPad screenshots
+  (13-inch), and Play needs tablet screenshots to be listed as
+  tablet-optimised.
