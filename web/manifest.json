@@ -3,7 +3,7 @@
     "short_name": "Converter",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0C8D83",
+    "background_color": "#048389",
     "theme_color": "#00897B",
     "description": "Ad-free offline currency converter",
     "orientation": "portrait-primary",
