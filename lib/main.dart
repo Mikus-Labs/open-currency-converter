@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_state.dart';
+import 'l10n/l10n.dart';
 import 'screens/converter_screen.dart';
 
 Future<void> main() async {
@@ -43,7 +44,9 @@ class _ConverterAppState extends State<ConverterApp> {
       child: ListenableBuilder(
         listenable: widget.state,
         builder: (context, _) => MaterialApp(
-          title: 'Converter',
+          onGenerateTitle: (context) => context.l10n.appTitle,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           themeMode: widget.state.themeMode,
           theme: ThemeData(colorSchemeSeed: seed, brightness: Brightness.light),

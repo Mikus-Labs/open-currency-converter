@@ -120,9 +120,9 @@ class AppState extends ChangeNotifier {
 
   bool get isStale => fetchedAt == null || DateTime.now().difference(fetchedAt!) > staleAfter;
 
-  /// Downloads fresh rates. Returns an error message on failure.
-  Future<String?> refresh() async {
-    if (loading) return null;
+  /// Downloads fresh rates. Returns false on failure, keeping the current rates.
+  Future<bool> refresh() async {
+    if (loading) return true;
     loading = true;
     notifyListeners();
     try {
@@ -132,9 +132,9 @@ class AppState extends ChangeNotifier {
         _ratesKey,
         jsonEncode({'snapshot': snapshot.toJson(), 'fetchedAt': fetchedAt!.toIso8601String()}),
       );
-      return null;
+      return true;
     } catch (_) {
-      return 'No connection. Showing rates from ${snapshot.date}.';
+      return false;
     } finally {
       loading = false;
       notifyListeners();

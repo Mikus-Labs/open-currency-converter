@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../format.dart';
+import '../l10n/l10n.dart';
 import '../widgets.dart';
 import 'currency_picker.dart';
 
@@ -10,7 +11,7 @@ class OwnRatesScreen extends StatelessWidget {
   const OwnRatesScreen({super.key});
 
   Future<void> _add(BuildContext context, AppState state) async {
-    final code = await pickCurrency(context, title: 'Currency to override');
+    final code = await pickCurrency(context, title: context.l10n.currencyToOverride);
     if (code == null || !context.mounted) return;
     await _edit(context, state, code);
   }
@@ -27,21 +28,22 @@ class OwnRatesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final codes = state.ownRates.keys.toList()..sort();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Own rates')),
+      appBar: AppBar(title: Text(l10n.ownRates)),
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.add),
-        label: const Text('Add'),
+        label: Text(l10n.add),
         onPressed: () => _add(context, state),
       ),
       body: ListView(
         padding: const EdgeInsets.only(bottom: 88),
         children: [
           SwitchListTile(
-            title: const Text('Use own rates'),
-            subtitle: const Text('Override market rates with your own values'),
+            title: Text(l10n.useOwnRates),
+            subtitle: Text(l10n.useOwnRatesSubtitle),
             value: state.useOwnRates,
             onChanged: state.setUseOwnRates,
           ),
@@ -50,7 +52,7 @@ class OwnRatesScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(24),
               child: Text(
-                'No own rates yet. Add one to use, say, your bank\'s or exchange office\'s rate instead of the market rate.',
+                l10n.ownRatesEmpty,
                 style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
             ),
@@ -63,11 +65,13 @@ class OwnRatesScreen extends StatelessWidget {
                 final marketValue = market != null && marketBase != null ? market / marketBase : null;
                 return ListTile(
                   leading: CurrencyBadge(code),
-                  title: Text('1 ${own.base.toUpperCase()} = ${formatAmount(own.value, 4)} ${code.toUpperCase()}'),
-                  subtitle: marketValue == null ? null : Text('Market: ${formatAmount(marketValue, 4)}'),
+                  title: Text(
+                    l10n.rateEquation(own.base.toUpperCase(), formatAmount(own.value, 4), code.toUpperCase()),
+                  ),
+                  subtitle: marketValue == null ? null : Text(l10n.marketRate(formatAmount(marketValue, 4))),
                   onTap: () => _edit(context, state, code),
                   trailing: IconButton(
-                    tooltip: 'Delete',
+                    tooltip: l10n.delete,
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => state.removeOwnRate(code),
                   ),
@@ -116,8 +120,9 @@ class _OwnRateDialogState extends State<_OwnRateDialog> {
   @override
   Widget build(BuildContext context) {
     final code = widget.code.toUpperCase();
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text('Own rate for $code'),
+      title: Text(l10n.ownRateFor(code)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +132,7 @@ class _OwnRateDialogState extends State<_OwnRateDialog> {
               const Text('1 '),
               TextButton(
                 onPressed: () async {
-                  final picked = await pickCurrency(context, title: 'Rate is per 1 of…', exclude: {widget.code});
+                  final picked = await pickCurrency(context, title: l10n.ratePerOneOf, exclude: {widget.code});
                   if (picked != null) setState(() => _base = picked);
                 },
                 child: Text(_base.toUpperCase()),
@@ -145,10 +150,10 @@ class _OwnRateDialogState extends State<_OwnRateDialog> {
         ],
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
         FilledButton(
           onPressed: _value == null ? null : () => Navigator.pop(context, OwnRate(base: _base, value: _value!)),
-          child: const Text('Save'),
+          child: Text(l10n.save),
         ),
       ],
     );

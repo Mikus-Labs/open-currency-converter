@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../l10n/l10n.dart';
 import '../widgets.dart';
 import 'currency_picker.dart';
 
@@ -11,13 +12,14 @@ class CurrenciesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
+    final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: const Text('Currencies')),
+      appBar: AppBar(title: Text(l10n.currencies)),
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.add),
-        label: const Text('Add'),
+        label: Text(l10n.add),
         onPressed: () async {
-          final code = await pickCurrency(context, title: 'Add currency', exclude: state.selected.toSet());
+          final code = await pickCurrency(context, title: l10n.addCurrency, exclude: state.selected.toSet());
           if (code != null) state.addCurrency(code);
         },
       ),
@@ -36,7 +38,7 @@ class CurrenciesScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  tooltip: 'Remove',
+                  tooltip: l10n.removeCurrency(code.toUpperCase()),
                   icon: const Icon(Icons.remove_circle_outline),
                   onPressed: state.selected.length > 1 ? () => state.removeCurrency(i) : null,
                 ),

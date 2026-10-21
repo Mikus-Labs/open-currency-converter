@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import '../app_state.dart';
 import '../expression.dart' as calc;
 import '../format.dart';
+import '../l10n/l10n.dart';
 import '../widgets.dart';
 import 'currencies_screen.dart';
 import 'currency_picker.dart';
@@ -16,8 +17,9 @@ class ConverterScreen extends StatelessWidget {
   const ConverterScreen({super.key});
 
   Future<void> _refresh(BuildContext context, AppState state) async {
-    final error = await state.refresh();
-    if (error != null && context.mounted) showMessage(context, error);
+    if (!await state.refresh() && context.mounted) {
+      showMessage(context, context.l10n.offlineError(state.snapshot.date));
+    }
   }
 
   void _open(BuildContext context, Widget screen) {
@@ -28,39 +30,40 @@ class ConverterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final updated = state.fetchedAt == null
-        ? 'Offline rates · ${state.snapshot.date}'
-        : 'Updated ${relativeAge(state.fetchedAt!, DateTime.now()).toLowerCase()} · ${state.snapshot.date}';
+        ? l10n.ratesOffline(state.snapshot.date)
+        : l10n.ratesUpdated(relativeAge(l10n, state.fetchedAt!, DateTime.now()), state.snapshot.date);
 
     return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Converter'),
+            Text(l10n.appTitle),
             Text(updated, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
           ],
         ),
         actions: [
           IconButton(
-            tooltip: 'Refresh rates',
+            tooltip: l10n.refreshRates,
             onPressed: state.loading ? null : () => _refresh(context, state),
             icon: state.loading
                 ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
                 : const Icon(Icons.refresh),
           ),
           IconButton(
-            tooltip: 'Share',
+            tooltip: l10n.share,
             icon: const Icon(Icons.share_outlined),
             onPressed: () => SharePlus.instance.share(ShareParams(text: state.shareText())),
           ),
           PopupMenuButton<Widget>(
             onSelected: (screen) => _open(context, screen),
-            itemBuilder: (_) => const [
-              PopupMenuItem(value: CurrenciesScreen(), child: Text('Currencies')),
-              PopupMenuItem(value: RatesScreen(), child: Text('Exchange rates')),
-              PopupMenuItem(value: OwnRatesScreen(), child: Text('Own rates')),
-              PopupMenuItem(value: SettingsScreen(), child: Text('Settings')),
+            itemBuilder: (_) => [
+              PopupMenuItem(value: const CurrenciesScreen(), child: Text(l10n.currencies)),
+              PopupMenuItem(value: const RatesScreen(), child: Text(l10n.exchangeRates)),
+              PopupMenuItem(value: const OwnRatesScreen(), child: Text(l10n.ownRates)),
+              PopupMenuItem(value: const SettingsScreen(), child: Text(l10n.settings)),
             ],
           ),
         ],
@@ -83,11 +86,11 @@ class ConverterScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.add),
-                      label: const Text('Add currency'),
+                      label: Text(l10n.addCurrency),
                       onPressed: () async {
                         final code = await pickCurrency(
                           context,
-                          title: 'Add currency',
+                          title: l10n.addCurrency,
                           exclude: state.selected.toSet(),
                         );
                         if (code != null) state.addCurrency(code);
@@ -113,6 +116,7 @@ class _ConverterRow extends StatelessWidget {
   Future<void> _showActions(BuildContext context, AppState state) async {
     final code = state.selected[index];
     final value = state.valueFor(index);
+    final l10n = context.l10n;
     final action = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
@@ -122,23 +126,23 @@ class _ConverterRow extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.swap_horiz),
-              title: const Text('Change currency'),
+              title: Text(l10n.changeCurrency),
               onTap: () => Navigator.pop(context, 'change'),
             ),
             ListTile(
               leading: const Icon(Icons.copy),
-              title: const Text('Copy'),
+              title: Text(l10n.copy),
               onTap: () => Navigator.pop(context, 'copy'),
             ),
             ListTile(
               leading: const Icon(Icons.content_paste),
-              title: const Text('Paste'),
+              title: Text(l10n.paste),
               onTap: () => Navigator.pop(context, 'paste'),
             ),
             if (state.selected.length > 1)
               ListTile(
                 leading: const Icon(Icons.remove_circle_outline),
-                title: const Text('Remove'),
+                title: Text(l10n.remove),
                 onTap: () => Navigator.pop(context, 'remove'),
               ),
           ],
@@ -148,17 +152,17 @@ class _ConverterRow extends StatelessWidget {
     if (!context.mounted) return;
     switch (action) {
       case 'change':
-        final picked = await pickCurrency(context, title: 'Replace ${code.toUpperCase()}');
+        final picked = await pickCurrency(context, title: l10n.replaceCurrency(code.toUpperCase()));
         if (picked != null) state.replaceCurrency(index, picked);
       case 'copy':
         if (value != null) {
           await Clipboard.setData(ClipboardData(text: plainAmount(value, state.decimals).replaceAll('−', '-')));
-          if (context.mounted) showMessage(context, 'Copied');
+          if (context.mounted) showMessage(context, l10n.copied);
         }
       case 'paste':
         final data = await Clipboard.getData(Clipboard.kTextPlain);
         state.setActive(index);
-        if (!state.paste(data?.text ?? '') && context.mounted) showMessage(context, 'Clipboard has no number');
+        if (!state.paste(data?.text ?? '') && context.mounted) showMessage(context, l10n.clipboardNoNumber);
       case 'remove':
         state.removeCurrency(index);
     }
@@ -171,6 +175,7 @@ class _ConverterRow extends StatelessWidget {
     final code = state.selected[index];
     final isActive = index == state.active;
     final value = state.valueFor(index);
+    final l10n = context.l10n;
 
     final String main;
     String? sub;
@@ -197,7 +202,7 @@ class _ConverterRow extends StatelessWidget {
                 ReorderableDragStartListener(
                   index: index,
                   child: Tooltip(
-                    message: 'Drag to reorder',
+                    message: l10n.dragToReorder,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
                       child: Icon(Icons.drag_indicator, color: theme.colorScheme.onSurfaceVariant),
@@ -216,7 +221,7 @@ class _ConverterRow extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 4),
                           child: Tooltip(
-                            message: 'Own rate',
+                            message: l10n.ownRate,
                             child: Icon(Icons.edit_note, size: 18, color: theme.colorScheme.tertiary),
                           ),
                         ),
@@ -256,7 +261,7 @@ class _ConverterRow extends StatelessWidget {
               ),
               if (state.selected.length > 1)
                 IconButton(
-                  tooltip: 'Remove ${code.toUpperCase()}',
+                  tooltip: l10n.removeCurrency(code.toUpperCase()),
                   visualDensity: VisualDensity.compact,
                   icon: Icon(Icons.close, size: 20, color: theme.colorScheme.onSurfaceVariant),
                   onPressed: () => state.removeCurrency(index),
@@ -369,7 +374,7 @@ class _Key extends StatelessWidget {
         onLongPress: onLongPress,
         child: Center(
           child: label == '⌫'
-              ? Icon(Icons.backspace_outlined, color: foreground, semanticLabel: 'Backspace')
+              ? Icon(Icons.backspace_outlined, color: foreground, semanticLabel: context.l10n.backspace)
               // Half-width keys (000, 00) shrink their label to fit.
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),

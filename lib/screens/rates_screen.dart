@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../format.dart';
+import '../l10n/l10n.dart';
 import '../widgets.dart';
 import 'currency_picker.dart';
 
@@ -21,6 +22,7 @@ class _RatesScreenState extends State<RatesScreen> {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final base = _base ?? state.activeCode;
     final q = _query.trim().toLowerCase();
 
@@ -39,13 +41,13 @@ class _RatesScreenState extends State<RatesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Exchange rates'),
+        title: Text(l10n.exchangeRates),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(64),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: SearchBar(
-              hintText: 'Search',
+              hintText: l10n.search,
               leading: const Icon(Icons.search),
               elevation: const WidgetStatePropertyAll(0),
               onChanged: (v) => setState(() => _query = v),
@@ -58,10 +60,10 @@ class _RatesScreenState extends State<RatesScreen> {
           ListTile(
             leading: CurrencyBadge(base),
             title: Text('1 ${base.toUpperCase()}'),
-            subtitle: Text('${state.nameOf(base)} · rates of ${state.snapshot.date}'),
+            subtitle: Text(l10n.ratesOf(state.nameOf(base), state.snapshot.date)),
             trailing: const Icon(Icons.swap_vert),
             onTap: () async {
-              final code = await pickCurrency(context, title: 'Base currency');
+              final code = await pickCurrency(context, title: l10n.baseCurrency);
               if (code != null) setState(() => _base = code);
             },
           ),
@@ -84,7 +86,7 @@ class _RatesScreenState extends State<RatesScreen> {
                       Text(rate == null ? '—' : formatAmount(rate, 4), style: theme.textTheme.titleMedium),
                       if (inverse != null)
                         Text(
-                          '1 ${code.toUpperCase()} = ${formatAmount(inverse, 4)} ${base.toUpperCase()}',
+                          l10n.rateEquation(code.toUpperCase(), formatAmount(inverse, 4), base.toUpperCase()),
                           style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                         ),
                     ],

@@ -52,6 +52,9 @@ The app icon is drawn in code by `assets/icon/draw.swift`. To change it, edit
 the script, then run `swift assets/icon/draw.swift assets/icon/icon.png` and
 `dart run flutter_launcher_icons` to regenerate the platform icons.
 
+UI text lives in `lib/l10n/app_en.arb`; adding a language is one translated
+file plus `dart run tool/l10n.dart`. See [docs/LOCALISATION.md](docs/LOCALISATION.md).
+
 Planned work is in [TODO.md](TODO.md).
 
 ## Privacy and licence
