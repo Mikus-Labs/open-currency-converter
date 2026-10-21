@@ -275,12 +275,13 @@ class Keypad extends StatelessWidget {
 
   final ValueChanged<String> onKey;
 
+  // A cell with several space-separated keys is split into half-width keys.
   static const _rows = [
     ['C', '%', '⌫', '÷'],
     ['7', '8', '9', '×'],
     ['4', '5', '6', '−'],
     ['1', '2', '3', '+'],
-    ['00', '0', '.', '='],
+    ['000 00', '0', '.', '='],
   ];
 
   @override
@@ -298,22 +299,31 @@ class Keypad extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  for (final key in row)
+                  for (final cell in row)
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(3),
-                        child: _Key(
-                          label: key,
-                          onTap: () {
-                            if (key == '00') {
-                              onKey('0');
-                              onKey('0');
-                            } else {
-                              onKey(key);
-                            }
-                          },
-                          onLongPress: key == '⌫' ? () => onKey('C') : null,
-                        ),
+                      child: Row(
+                        children: [
+                          for (final key in cell.split(' '))
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(3),
+                                child: _Key(
+                                  label: key,
+                                  onTap: () {
+                                    // 00 and 000 type their zeros one at a time.
+                                    if (RegExp(r'^00+$').hasMatch(key)) {
+                                      for (var i = 0; i < key.length; i++) {
+                                        onKey('0');
+                                      }
+                                    } else {
+                                      onKey(key);
+                                    }
+                                  },
+                                  onLongPress: key == '⌫' ? () => onKey('C') : null,
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                 ],
@@ -360,9 +370,16 @@ class _Key extends StatelessWidget {
         child: Center(
           child: label == '⌫'
               ? Icon(Icons.backspace_outlined, color: foreground, semanticLabel: 'Backspace')
-              : Text(
-                  label,
-                  style: TextStyle(fontSize: 24, color: foreground, fontWeight: FontWeight.w500),
+              // Half-width keys (000, 00) shrink their label to fit.
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      label,
+                      style: TextStyle(fontSize: 24, color: foreground, fontWeight: FontWeight.w500),
+                    ),
+                  ),
                 ),
         ),
       ),
