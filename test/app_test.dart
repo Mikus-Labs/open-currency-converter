@@ -31,7 +31,7 @@ void main() {
     final state = await _state();
     expect(state.fetchedAt, isNull);
     expect(state.snapshot.rates.length, greaterThan(100));
-    expect(await state.refresh(), isNull);
+    expect(await state.refresh(), isTrue);
     expect(state.snapshot.rates['eur'], 0.9);
     expect(state.fetchedAt, isNotNull);
   });
@@ -39,7 +39,7 @@ void main() {
   test('offline refresh keeps rates and reports an error', () async {
     final state = await _state(online: false);
     final before = state.snapshot;
-    expect(await state.refresh(), contains('No connection'));
+    expect(await state.refresh(), isFalse);
     expect(state.snapshot, same(before));
   });
 

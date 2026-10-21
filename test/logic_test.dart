@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:open_converter/expression.dart';
 import 'package:open_converter/format.dart';
+import 'package:open_converter/l10n/app_localizations.dart';
 import 'package:open_converter/rates.dart';
 
 void main() {
@@ -62,10 +64,12 @@ void main() {
     });
     test('relativeAge', () {
       final now = DateTime(2026, 10, 21, 12);
-      expect(relativeAge(now, now), 'Just now');
-      expect(relativeAge(now.subtract(const Duration(hours: 3)), now), '3 h ago');
-      expect(relativeAge(now.subtract(const Duration(hours: 30)), now), 'Yesterday');
-      expect(relativeAge(now.subtract(const Duration(days: 4)), now), '4 d ago');
+      final l10n = lookupAppLocalizations(const Locale('en'));
+      expect(relativeAge(l10n, now, now), 'just now');
+      expect(relativeAge(l10n, now.subtract(const Duration(minutes: 1)), now), '1 min ago');
+      expect(relativeAge(l10n, now.subtract(const Duration(hours: 3)), now), '3 h ago');
+      expect(relativeAge(l10n, now.subtract(const Duration(hours: 30)), now), 'yesterday');
+      expect(relativeAge(l10n, now.subtract(const Duration(days: 4)), now), '4 d ago');
     });
   });
 

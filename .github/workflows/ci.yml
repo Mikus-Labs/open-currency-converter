@@ -29,7 +29,10 @@ jobs:
       - run: flutter pub get
 
       - name: Check formatting
-        run: dart format --output=none --set-exit-if-changed lib test
+        run: dart format --output=none --set-exit-if-changed lib test tool
+
+      - name: Check localisation files are up to date
+        run: dart run tool/l10n.dart && git diff --exit-code
 
       - run: flutter analyze
 

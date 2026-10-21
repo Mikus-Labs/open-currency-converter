@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:intl/intl.dart';
 
+import 'l10n/app_localizations.dart';
+
 /// Formats a converted amount for display with grouping, e.g. `12,345.67`.
 ///
 /// Values under 1 get extra decimals so small amounts (and crypto) keep at
@@ -39,12 +41,12 @@ int _digitsFor(double value, int decimals) {
 
 String _pattern(int digits) => digits == 0 ? '#,##0' : '#,##0.${'#' * digits}';
 
-/// Human-friendly age, e.g. "Just now", "3 h ago", "Yesterday".
-String relativeAge(DateTime time, DateTime now) {
+/// Human-friendly age for use mid-sentence, e.g. "just now", "3 h ago".
+String relativeAge(AppLocalizations l10n, DateTime time, DateTime now) {
   final diff = now.difference(time);
-  if (diff.inMinutes < 1) return 'Just now';
-  if (diff.inHours < 1) return '${diff.inMinutes} min ago';
-  if (diff.inHours < 24) return '${diff.inHours} h ago';
-  if (diff.inDays < 2) return 'Yesterday';
-  return '${diff.inDays} d ago';
+  if (diff.inMinutes < 1) return l10n.ageJustNow;
+  if (diff.inHours < 1) return l10n.ageMinutes(diff.inMinutes);
+  if (diff.inHours < 24) return l10n.ageHours(diff.inHours);
+  if (diff.inDays < 2) return l10n.ageYesterday;
+  return l10n.ageDays(diff.inDays);
 }

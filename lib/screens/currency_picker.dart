@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../l10n/l10n.dart';
 import '../widgets.dart';
 
 /// Opens a searchable currency list and returns the chosen code.
-Future<String?> pickCurrency(BuildContext context, {String title = 'Choose currency', Set<String> exclude = const {}}) {
+Future<String?> pickCurrency(BuildContext context, {String? title, Set<String> exclude = const {}}) {
   return Navigator.of(context).push<String>(
     MaterialPageRoute(
-      builder: (_) => CurrencyPickerScreen(title: title, exclude: exclude),
+      builder: (_) => CurrencyPickerScreen(title: title ?? context.l10n.chooseCurrency, exclude: exclude),
     ),
   );
 }
@@ -28,6 +29,7 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
+    final l10n = context.l10n;
     final q = _query.trim().toLowerCase();
     final codes =
         state.snapshot.rates.keys
@@ -51,7 +53,7 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: SearchBar(
               autoFocus: true,
-              hintText: 'Search code or name',
+              hintText: l10n.searchCodeOrName,
               leading: const Icon(Icons.search),
               elevation: const WidgetStatePropertyAll(0),
               onChanged: (v) => setState(() => _query = v),
@@ -60,7 +62,7 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
         ),
       ),
       body: codes.isEmpty
-          ? const Center(child: Text('Not found'))
+          ? Center(child: Text(l10n.notFound))
           : ListView.builder(
               itemCount: codes.length,
               itemBuilder: (context, i) {
@@ -71,7 +73,7 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
                   title: Text(code.toUpperCase()),
                   subtitle: Text(state.nameOf(code)),
                   trailing: IconButton(
-                    tooltip: isFavorite ? 'Remove from favorites' : 'Add to favorites',
+                    tooltip: isFavorite ? l10n.removeFromFavorites : l10n.addToFavorites,
                     icon: Icon(isFavorite ? Icons.star : Icons.star_border),
                     color: isFavorite ? Theme.of(context).colorScheme.primary : null,
                     onPressed: () => state.toggleFavorite(code),

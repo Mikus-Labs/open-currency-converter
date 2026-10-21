@@ -1,0 +1,343 @@
+{
+  "@@locale": "en",
+  "appTitle": "Converter",
+  "@appTitle": {
+    "description": "App name, shown in the title bar and task switcher. Keep it short."
+  },
+  "ratesOffline": "Offline rates · {date}",
+  "@ratesOffline": {
+    "description": "Subtitle under the app title when rates have never been downloaded; the built-in rates are used. {date} is the rates date (YYYY-MM-DD).",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2026-10-20"
+      }
+    }
+  },
+  "ratesUpdated": "Updated {age} · {date}",
+  "@ratesUpdated": {
+    "description": "Subtitle under the app title. {age} is a relative time such as \"3 h ago\" (from the age* messages), {date} is the rates date (YYYY-MM-DD).",
+    "placeholders": {
+      "age": {
+        "type": "String",
+        "example": "3 h ago"
+      },
+      "date": {
+        "type": "String",
+        "example": "2026-10-20"
+      }
+    }
+  },
+  "ageJustNow": "just now",
+  "@ageJustNow": {
+    "description": "Relative time, inserted mid-sentence into ratesUpdated and ratesDownloaded. Use lower case where the language allows."
+  },
+  "ageMinutes": "{count, plural, =1{1 min ago} other{{count} min ago}}",
+  "@ageMinutes": {
+    "description": "Relative time in minutes, inserted mid-sentence. Abbreviations are fine; space is tight.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "ageHours": "{count, plural, =1{1 h ago} other{{count} h ago}}",
+  "@ageHours": {
+    "description": "Relative time in hours, inserted mid-sentence. Abbreviations are fine; space is tight.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "ageYesterday": "yesterday",
+  "@ageYesterday": {
+    "description": "Relative time, inserted mid-sentence."
+  },
+  "ageDays": "{count, plural, =1{1 d ago} other{{count} d ago}}",
+  "@ageDays": {
+    "description": "Relative time in days, inserted mid-sentence. Abbreviations are fine; space is tight.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "refreshRates": "Refresh rates",
+  "@refreshRates": {
+    "description": "Tooltip for the button that downloads the latest exchange rates."
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Tooltip for the button that shares all converted amounts as text."
+  },
+  "currencies": "Currencies",
+  "@currencies": {
+    "description": "Menu item and screen title for managing the list of currencies on the converter."
+  },
+  "exchangeRates": "Exchange rates",
+  "@exchangeRates": {
+    "description": "Menu item and screen title for the table of all exchange rates; also a settings section heading."
+  },
+  "ownRates": "Own rates",
+  "@ownRates": {
+    "description": "Menu item and screen title for custom exchange rates the user enters, e.g. their bank's rate."
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Menu item and screen title."
+  },
+  "addCurrency": "Add currency",
+  "@addCurrency": {
+    "description": "Button below the converter rows, and the title of the currency picker when adding one."
+  },
+  "changeCurrency": "Change currency",
+  "@changeCurrency": {
+    "description": "Action in the long-press menu of a converter row: swap this row to another currency."
+  },
+  "copy": "Copy",
+  "@copy": {
+    "description": "Action in the long-press menu of a converter row: copy the amount to the clipboard."
+  },
+  "paste": "Paste",
+  "@paste": {
+    "description": "Action in the long-press menu of a converter row: paste a number from the clipboard into this row."
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Action in the long-press menu of a converter row: remove the currency from the converter."
+  },
+  "replaceCurrency": "Replace {code}",
+  "@replaceCurrency": {
+    "description": "Title of the currency picker when changing a row's currency. {code} is a currency code.",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "EUR"
+      }
+    }
+  },
+  "copied": "Copied",
+  "@copied": {
+    "description": "Short confirmation after copying an amount."
+  },
+  "clipboardNoNumber": "Clipboard has no number",
+  "@clipboardNoNumber": {
+    "description": "Error when pasting and the clipboard text is not a number."
+  },
+  "dragToReorder": "Drag to reorder",
+  "@dragToReorder": {
+    "description": "Tooltip on the drag handle of a converter row."
+  },
+  "ownRate": "Own rate",
+  "@ownRate": {
+    "description": "Tooltip on the marker shown next to a currency that uses a custom rate."
+  },
+  "removeCurrency": "Remove {code}",
+  "@removeCurrency": {
+    "description": "Tooltip and screen-reader label for the remove button on a currency row. {code} is a currency code.",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "EUR"
+      }
+    }
+  },
+  "backspace": "Backspace",
+  "@backspace": {
+    "description": "Screen-reader label for the keypad key that deletes the last character."
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Floating button that adds an item (a currency or an own rate)."
+  },
+  "chooseCurrency": "Choose currency",
+  "@chooseCurrency": {
+    "description": "Default title of the currency picker."
+  },
+  "searchCodeOrName": "Search code or name",
+  "@searchCodeOrName": {
+    "description": "Hint in the search field of the currency picker."
+  },
+  "notFound": "Not found",
+  "@notFound": {
+    "description": "Shown when a search matches no currencies."
+  },
+  "addToFavorites": "Add to favorites",
+  "@addToFavorites": {
+    "description": "Tooltip for the star button; favourites are listed first in the currency picker."
+  },
+  "removeFromFavorites": "Remove from favorites",
+  "@removeFromFavorites": {
+    "description": "Tooltip for the filled star button."
+  },
+  "currencyToOverride": "Currency to override",
+  "@currencyToOverride": {
+    "description": "Title of the currency picker when adding an own rate."
+  },
+  "useOwnRates": "Use own rates",
+  "@useOwnRates": {
+    "description": "Switch that turns all own rates on or off."
+  },
+  "useOwnRatesSubtitle": "Override market rates with your own values",
+  "@useOwnRatesSubtitle": {
+    "description": "Explanation under the useOwnRates switch."
+  },
+  "ownRatesEmpty": "No own rates yet. Add one to use, say, your bank's or exchange office's rate instead of the market rate.",
+  "@ownRatesEmpty": {
+    "description": "Shown on the own rates screen when none have been added."
+  },
+  "rateEquation": "1 {from} = {amount} {to}",
+  "@rateEquation": {
+    "description": "A rate between two currencies. {from} and {to} are currency codes, {amount} is a formatted number. Change the order only if the language needs it.",
+    "placeholders": {
+      "from": {
+        "type": "String",
+        "example": "USD"
+      },
+      "amount": {
+        "type": "String",
+        "example": "0.9214"
+      },
+      "to": {
+        "type": "String",
+        "example": "EUR"
+      }
+    }
+  },
+  "marketRate": "Market: {amount}",
+  "@marketRate": {
+    "description": "Subtitle of an own rate showing the market rate for comparison. {amount} is a formatted number.",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "0.9214"
+      }
+    }
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Tooltip for the button that deletes an own rate."
+  },
+  "ownRateFor": "Own rate for {code}",
+  "@ownRateFor": {
+    "description": "Title of the dialog for entering an own rate. {code} is a currency code.",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "EUR"
+      }
+    }
+  },
+  "ratePerOneOf": "Rate is per 1 of…",
+  "@ratePerOneOf": {
+    "description": "Title of the currency picker that chooses the base currency of an own rate (\"1 USD = …\")."
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Dialog button."
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Dialog button."
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Hint in the search field of the exchange rates screen."
+  },
+  "ratesOf": "{name} · rates of {date}",
+  "@ratesOf": {
+    "description": "Subtitle of the base currency on the exchange rates screen. {name} is a currency name, {date} is the rates date (YYYY-MM-DD).",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "US Dollar"
+      },
+      "date": {
+        "type": "String",
+        "example": "2026-10-20"
+      }
+    }
+  },
+  "baseCurrency": "Base currency",
+  "@baseCurrency": {
+    "description": "Title of the currency picker for the base currency of the rates table."
+  },
+  "decimalPlaces": "Decimal places",
+  "@decimalPlaces": {
+    "description": "Setting: how many decimals amounts show."
+  },
+  "decimalPlacesSubtitle": "Amounts below 1 always keep 3 significant digits",
+  "@decimalPlacesSubtitle": {
+    "description": "Explanation under the decimal places setting."
+  },
+  "keypadVibration": "Keypad vibration",
+  "@keypadVibration": {
+    "description": "Setting: vibrate when a keypad key is pressed."
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Setting: light or dark appearance."
+  },
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Theme option: follow the device setting."
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme option."
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme option."
+  },
+  "ratesBuiltIn": "Built-in offline rates of {date}",
+  "@ratesBuiltIn": {
+    "description": "Exchange rates status when rates have never been downloaded. {date} is the rates date (YYYY-MM-DD).",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2026-10-20"
+      }
+    }
+  },
+  "ratesDownloaded": "Rates of {date}, downloaded {age}",
+  "@ratesDownloaded": {
+    "description": "Exchange rates status. {date} is the rates date (YYYY-MM-DD), {age} is a relative time such as \"3 h ago\" (from the age* messages).",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2026-10-20"
+      },
+      "age": {
+        "type": "String",
+        "example": "3 h ago"
+      }
+    }
+  },
+  "refreshNow": "Refresh now",
+  "@refreshNow": {
+    "description": "Tooltip for the button that downloads the latest rates."
+  },
+  "ratesRefreshed": "Rates updated",
+  "@ratesRefreshed": {
+    "description": "Confirmation after downloading the latest rates."
+  },
+  "offlineError": "No connection. Showing rates from {date}.",
+  "@offlineError": {
+    "description": "Error when rates could not be downloaded. {date} is the date of the rates still in use (YYYY-MM-DD).",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2026-10-20"
+      }
+    }
+  },
+  "aboutRates": "Rates come from the free, open fawazahmed0 currency-api (CC0) and are updated daily. They are reference rates for information only, not trading quotes.\n\nNo ads, no accounts, no tracking.",
+  "@aboutRates": {
+    "description": "Note at the bottom of settings. Keep \"fawazahmed0 currency-api\" and \"CC0\" untranslated."
+  }
+}
