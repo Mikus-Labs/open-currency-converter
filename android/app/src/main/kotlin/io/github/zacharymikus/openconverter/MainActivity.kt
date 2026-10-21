@@ -1,4 +1,4 @@
-package dev.openconverter.open_converter
+package io.github.zacharymikus.openconverter
 
 import io.flutter.embedding.android.FlutterActivity
 
