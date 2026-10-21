@@ -89,11 +89,13 @@ a year; renew them and update the two base64 secrets.
 
 ## Before the first store submission
 
-- **App icon:** still the default Flutter icon. Replace
-  `android/app/src/main/res/mipmap-*` and
-  `ios/Runner/Assets.xcassets/AppIcon.appiconset`, or use `flutter_launcher_icons`.
-- **Privacy policy URL:** both stores require one, even for apps that collect
-  nothing.
+- **Privacy policy URL:** both stores require one. The policy is
+  [`PRIVACY.md`](../PRIVACY.md), but the stores need a public URL for it.
+  Either make the repo public and use
+  `https://github.com/ZacharyMikus/open-converter/blob/main/PRIVACY.md`, or
+  publish it with GitHub Pages (Pages on a private repo needs a paid GitHub
+  plan). The contact link in the policy is the repo's Issues page, which also
+  needs a public repo.
 - **Privacy forms:** the app collects no data and has no ads or tracking, so
   Play *Data safety* is "No data collected" and App Store *App Privacy* is
   "Data Not Collected". Export compliance is pre-answered:

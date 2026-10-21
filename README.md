@@ -47,3 +47,14 @@ Code layout:
 | `lib/rates.dart` | Rates snapshot model and API client |
 | `lib/app_state.dart` | App state, conversion, persistence |
 | `lib/screens/` | Converter, currencies, rates, own rates, settings, picker |
+
+The app icon source is `assets/icon/icon.png`. After changing it, regenerate
+the platform icons with `dart run flutter_launcher_icons`.
+
+Planned work is in [TODO.md](TODO.md).
+
+## Privacy and licence
+
+The app collects no data; see [PRIVACY.md](PRIVACY.md). The code is under the
+[MIT licence](LICENSE). Exchange rates come from
+[fawazahmed0/exchange-api](https://github.com/fawazahmed0/exchange-api) (CC0).
