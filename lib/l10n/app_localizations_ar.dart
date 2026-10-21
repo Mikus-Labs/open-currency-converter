@@ -210,6 +210,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get keypadVibration => 'اهتزاز لوحة المفاتيح';
 
   @override
+  String get zeroKeys => 'مفاتيح الأصفار';
+
+  @override
   String get theme => 'المظهر';
 
   @override
@@ -220,6 +223,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get themeDark => 'داكن';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get languageName => 'العربية';
+
+  @override
+  String get languageSystem => 'لغة النظام';
 
   @override
   String ratesBuiltIn(String date) {
@@ -245,4 +257,13 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get aboutRates =>
       'تأتي الأسعار من واجهة fawazahmed0 currency-api المجانية والمفتوحة (CC0) وتُحدَّث يوميًا. وهي أسعار مرجعية للعلم فقط، وليست أسعار تداول.\n\nبلا إعلانات، بلا حسابات، بلا تتبع.';
+
+  @override
+  String get donate => 'اشترِ لي قهوة';
+
+  @override
+  String get donateSubtitle => 'مجاني وبدون إعلانات. دعمك يساعد على إبقائه كذلك.';
+
+  @override
+  String get linkError => 'تعذّر فتح الرابط';
 }

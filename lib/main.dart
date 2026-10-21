@@ -47,6 +47,7 @@ class _ConverterAppState extends State<ConverterApp> {
           onGenerateTitle: (context) => context.l10n.appTitle,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          locale: widget.state.locale,
           debugShowCheckedModeBanner: false,
           themeMode: widget.state.themeMode,
           theme: ThemeData(colorSchemeSeed: seed, brightness: Brightness.light),

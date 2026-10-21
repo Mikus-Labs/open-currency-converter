@@ -183,6 +183,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keypadVibration => 'Keypad vibration';
 
   @override
+  String get zeroKeys => 'Zero keys';
+
+  @override
   String get theme => 'Theme';
 
   @override
@@ -193,6 +196,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeDark => 'Dark';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get languageName => 'English';
+
+  @override
+  String get languageSystem => 'System default';
 
   @override
   String ratesBuiltIn(String date) {
@@ -218,4 +230,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutRates =>
       'Rates come from the free, open fawazahmed0 currency-api (CC0) and are updated daily. They are reference rates for information only, not trading quotes.\n\nNo ads, no accounts, no tracking.';
+
+  @override
+  String get donate => 'Buy me a coffee';
+
+  @override
+  String get donateSubtitle => 'Free and ad-free. Tips help keep it that way.';
+
+  @override
+  String get linkError => 'Couldn\'t open the link';
 }

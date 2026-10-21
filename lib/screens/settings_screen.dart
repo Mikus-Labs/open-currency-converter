@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../app_state.dart';
 import '../format.dart';
 import '../l10n/l10n.dart';
+import '../links.dart';
 import '../widgets.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -29,6 +30,21 @@ class SettingsScreen extends StatelessWidget {
           ),
           SwitchListTile(title: Text(l10n.keypadVibration), value: state.haptics, onChanged: state.setHaptics),
           ListTile(
+            title: Text(l10n.zeroKeys),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: SegmentedButton<ZeroKeys>(
+                segments: const [
+                  ButtonSegment(value: ZeroKeys.both, label: Text('000 + 00')),
+                  ButtonSegment(value: ZeroKeys.doubleZero, label: Text('00')),
+                  ButtonSegment(value: ZeroKeys.tripleZero, label: Text('000')),
+                ],
+                selected: {state.zeroKeys},
+                onSelectionChanged: (s) => state.setZeroKeys(s.first),
+              ),
+            ),
+          ),
+          ListTile(
             title: Text(l10n.theme),
             subtitle: Padding(
               padding: const EdgeInsets.only(top: 8),
@@ -41,6 +57,19 @@ class SettingsScreen extends StatelessWidget {
                 selected: {state.themeMode},
                 onSelectionChanged: (s) => state.setThemeMode(s.first),
               ),
+            ),
+          ),
+          ListTile(
+            title: Text(l10n.language),
+            subtitle: DropdownButton<Locale?>(
+              isExpanded: true,
+              value: state.locale,
+              onChanged: state.setLocale,
+              items: [
+                DropdownMenuItem(value: null, child: Text(l10n.languageSystem)),
+                for (final locale in AppLocalizations.supportedLocales)
+                  DropdownMenuItem(value: locale, child: Text(lookupAppLocalizations(locale).languageName)),
+              ],
             ),
           ),
           const Divider(),
@@ -63,6 +92,16 @@ class SettingsScreen extends StatelessWidget {
                       }
                     },
                   ),
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.coffee_outlined),
+            title: Text(l10n.donate),
+            subtitle: Text(l10n.donateSubtitle),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () async {
+              if (!await openLink(donateUrl) && context.mounted) showMessage(context, l10n.linkError);
+            },
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),

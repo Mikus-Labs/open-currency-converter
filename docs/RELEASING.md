@@ -89,6 +89,13 @@ a year; renew them and update the two base64 secrets.
 
 ## Before the first store submission
 
+- **Donation link:** replace the placeholder `donateUrl` in `lib/links.dart`
+  and the link in the README with the real Buy Me a Coffee page.
+- **Donation link on iOS:** App Store guideline 3.1.1 asks for tips to the
+  developer to go through In-App Purchase. External donation links are allowed
+  on the US storefront, but may be rejected elsewhere. If review objects, hide
+  the tile on iOS (`defaultTargetPlatform == TargetPlatform.iOS`) or use a
+  tip-jar IAP. Google Play doesn't require Play Billing for donations.
 - **Privacy policy URL:** both stores require one. The policy is
   [`PRIVACY.md`](../PRIVACY.md), but the stores need a public URL for it.
   Either make the repo public and use

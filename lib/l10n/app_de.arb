@@ -49,14 +49,21 @@
   "decimalPlaces": "Nachkommastellen",
   "decimalPlacesSubtitle": "Beträge unter 1 behalten immer 3 signifikante Stellen",
   "keypadVibration": "Tastenvibration",
+  "zeroKeys": "Nulltasten",
   "theme": "Design",
   "themeSystem": "System",
   "themeLight": "Hell",
   "themeDark": "Dunkel",
+  "language": "Sprache",
+  "languageName": "Deutsch",
+  "languageSystem": "Systemstandard",
   "ratesBuiltIn": "Integrierte Offline-Kurse vom {date}",
   "ratesDownloaded": "Kurse vom {date}, geladen {age}",
   "refreshNow": "Jetzt aktualisieren",
   "ratesRefreshed": "Kurse aktualisiert",
   "offlineError": "Keine Verbindung. Kurse vom {date} werden angezeigt.",
-  "aboutRates": "Die Kurse stammen aus der freien, offenen fawazahmed0 currency-api (CC0) und werden täglich aktualisiert. Es sind Referenzkurse nur zur Information, keine Handelskurse.\n\nKeine Werbung, keine Konten, kein Tracking."
+  "aboutRates": "Die Kurse stammen aus der freien, offenen fawazahmed0 currency-api (CC0) und werden täglich aktualisiert. Es sind Referenzkurse nur zur Information, keine Handelskurse.\n\nKeine Werbung, keine Konten, kein Tracking.",
+  "donate": "Spendier mir einen Kaffee",
+  "donateSubtitle": "Kostenlos und werbefrei. Spenden helfen, dass es so bleibt.",
+  "linkError": "Link konnte nicht geöffnet werden"
 }
