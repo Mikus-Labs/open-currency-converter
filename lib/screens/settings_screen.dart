@@ -25,11 +25,7 @@ class SettingsScreen extends StatelessWidget {
               items: [for (var i = 0; i <= 6; i++) DropdownMenuItem(value: i, child: Text('$i'))],
             ),
           ),
-          SwitchListTile(
-            title: const Text('Keypad vibration'),
-            value: state.haptics,
-            onChanged: state.setHaptics,
-          ),
+          SwitchListTile(title: const Text('Keypad vibration'), value: state.haptics, onChanged: state.setHaptics),
           ListTile(
             title: const Text('Theme'),
             subtitle: Padding(

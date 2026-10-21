@@ -16,7 +16,10 @@ Future<AppState> _state({bool online = true}) async {
     if (!online) throw http.ClientException('offline');
     return http.Response(req.url.path.endsWith('/usd.min.json') ? _rates : _names, 200);
   });
-  final state = AppState(service: RatesService(client: client), prefs: await SharedPreferences.getInstance());
+  final state = AppState(
+    service: RatesService(client: client),
+    prefs: await SharedPreferences.getInstance(),
+  );
   await state.load();
   return state;
 }

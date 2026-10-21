@@ -58,9 +58,7 @@ List<Object>? _tokenize(String s) {
     final isDigit = c.codeUnitAt(0) >= 0x30 && c.codeUnitAt(0) <= 0x39;
     if (isDigit || c == '.') {
       number.write(c);
-    } else if (c == '−' &&
-        number.isEmpty &&
-        (tokens.isEmpty || (tokens.last is String && tokens.last != '%'))) {
+    } else if (c == '−' && number.isEmpty && (tokens.isEmpty || (tokens.last is String && tokens.last != '%'))) {
       // Unary minus at the start or right after an operator.
       number.write('-');
     } else if (operators.contains(c) || c == '%') {
@@ -168,8 +166,6 @@ String _lastNumber(String expr) {
     if (!isDigit && c != '.') break;
     i--;
   }
-  final isUnary = i > 0 &&
-      expr[i - 1] == '−' &&
-      (i == 1 || operators.contains(expr[i - 2]));
+  final isUnary = i > 0 && expr[i - 1] == '−' && (i == 1 || operators.contains(expr[i - 2]));
   return expr.substring(isUnary ? i - 1 : i);
 }
