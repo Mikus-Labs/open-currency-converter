@@ -48,8 +48,9 @@ Code layout:
 | `lib/app_state.dart` | App state, conversion, persistence |
 | `lib/screens/` | Converter, currencies, rates, own rates, settings, picker |
 
-The app icon source is `assets/icon/icon.png`. After changing it, regenerate
-the platform icons with `dart run flutter_launcher_icons`.
+The app icon is drawn in code by `assets/icon/draw.swift`. To change it, edit
+the script, then run `swift assets/icon/draw.swift assets/icon/icon.png` and
+`dart run flutter_launcher_icons` to regenerate the platform icons.
 
 Planned work is in [TODO.md](TODO.md).
 
