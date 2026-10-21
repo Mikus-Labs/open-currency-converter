@@ -14,6 +14,8 @@ No ads, no subscriptions, no accounts, no tracking.
 - Works offline: last downloaded rates are cached and a snapshot ships with
   the app; rates refresh automatically when older than 6 hours
 - Share the current conversion, decimal places, light/dark theme, haptics
+- Phones and tablets, portrait and landscape
+- English, Arabic, Chinese, French, German, Russian, Spanish and Thai
 
 ## Exchange rates
 

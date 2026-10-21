@@ -2,9 +2,8 @@
 
 ## Localisation
 
-Localisation is set up, but only English exists so far. The app it replaces
-shipped 24 languages, so this is the main gap for users outside
-English-speaking countries.
+The app ships in English, Arabic, Chinese (Simplified), French, German,
+Russian, Spanish and Thai. The translations are machine-made and need review.
 
 - [x] **Set up Flutter localisation** with `lib/l10n/app_en.arb` as the
       template. See [docs/LOCALISATION.md](docs/LOCALISATION.md).
@@ -26,12 +25,14 @@ English-speaking countries.
       `AndroidManifest.xml` and `Info.plist`, not the ARB files. Localise it
       with Android `values-<locale>/strings.xml` and iOS
       `InfoPlist.strings` if the translated name should differ.
-- [ ] **Right-to-left:** check layouts in Arabic, Hebrew and Persian. Number
-      fields should stay left-to-right.
-- [ ] **Tests:** a widget test that pumps the app in a non-English locale and
-      checks number formatting.
+- [ ] **Right-to-left:** Arabic mirrors correctly and the keypad stays
+      left-to-right. Check on a device that amounts and expressions such as
+      `5+5` read naturally, and recheck when adding Hebrew or Persian.
+- [x] **Tests:** `test/layout_test.dart` renders the app in every language
+      at phone and tablet sizes in both orientations, failing on overflow.
 - [ ] **Store listings:** translate the store descriptions and screenshots
       for each language shipped.
-- [ ] **Add the first languages:** for example es, de, fr, pt_BR, ru, tr,
-      zh_Hans, ja, ar, hi, using the prompt in docs/LOCALISATION.md. Have a
-      native speaker review each before release.
+- [ ] **Review translations:** de, ru, fr, es, th, ar and zh were machine
+      translated. Have a native speaker check each before release, and add
+      Traditional Chinese (`zh_Hant`) if needed; it currently falls back to
+      Simplified.

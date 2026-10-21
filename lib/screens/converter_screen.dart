@@ -69,9 +69,9 @@ class ConverterScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final currencies = Expanded(
               child: RefreshIndicator(
                 onRefresh: () => _refresh(context, state),
                 child: ReorderableListView.builder(
@@ -99,9 +99,28 @@ class ConverterScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Keypad(onKey: state.press),
-          ],
+            );
+            final keypad = Keypad(onKey: state.press);
+
+            // Landscape: currencies beside a full-height keypad.
+            if (constraints.maxWidth > constraints.maxHeight) {
+              final width = (constraints.maxWidth * 0.42).clamp(280.0, 520.0);
+              return Row(
+                children: [
+                  currencies,
+                  SizedBox(width: width, child: keypad),
+                ],
+              );
+            }
+            // Portrait: keypad below, growing with the screen on tablets.
+            final height = (constraints.maxHeight * 0.45).clamp(240.0, 560.0);
+            return Column(
+              children: [
+                currencies,
+                SizedBox(height: height, child: keypad),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -274,7 +293,8 @@ class _ConverterRow extends StatelessWidget {
   }
 }
 
-/// Calculator keypad. Long-press backspace to clear.
+/// Calculator keypad that fills the space it is given. Long-press backspace
+/// to clear.
 class Keypad extends StatelessWidget {
   const Keypad({super.key, required this.onKey});
 
@@ -292,49 +312,51 @@ class Keypad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final height = (MediaQuery.sizeOf(context).height * 0.42).clamp(260.0, 380.0);
 
-    return Container(
-      height: height,
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-      color: scheme.surfaceContainer,
-      child: Column(
-        children: [
-          for (final row in _rows)
-            Expanded(
-              child: Row(
-                children: [
-                  for (final cell in row)
-                    Expanded(
-                      child: Row(
-                        children: [
-                          for (final key in cell.split(' '))
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(3),
-                                child: _Key(
-                                  label: key,
-                                  onTap: () {
-                                    // 00 and 000 type their zeros one at a time.
-                                    if (RegExp(r'^00+$').hasMatch(key)) {
-                                      for (var i = 0; i < key.length; i++) {
-                                        onKey('0');
+    // Keypads keep the 7 8 9 order in right-to-left languages too.
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+        color: scheme.surfaceContainer,
+        child: Column(
+          children: [
+            for (final row in _rows)
+              Expanded(
+                child: Row(
+                  children: [
+                    for (final cell in row)
+                      Expanded(
+                        child: Row(
+                          children: [
+                            for (final key in cell.split(' '))
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: _Key(
+                                    label: key,
+                                    onTap: () {
+                                      // 00 and 000 type their zeros one at a time.
+                                      if (RegExp(r'^00+$').hasMatch(key)) {
+                                        for (var i = 0; i < key.length; i++) {
+                                          onKey('0');
+                                        }
+                                      } else {
+                                        onKey(key);
                                       }
-                                    } else {
-                                      onKey(key);
-                                    }
-                                  },
-                                  onLongPress: key == '⌫' ? () => onKey('C') : null,
+                                    },
+                                    onLongPress: key == '⌫' ? () => onKey('C') : null,
+                                  ),
                                 ),
                               ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -372,20 +394,26 @@ class _Key extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: onTap,
         onLongPress: onLongPress,
-        child: Center(
-          child: label == '⌫'
-              ? Icon(Icons.backspace_outlined, color: foreground, semanticLabel: context.l10n.backspace)
-              // Half-width keys (000, 00) shrink their label to fit.
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      label,
-                      style: TextStyle(fontSize: 24, color: foreground, fontWeight: FontWeight.w500),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Labels scale with the key: larger on tablets, smaller in phone landscape.
+            final size = (constraints.maxHeight * 0.4).clamp(16.0, 34.0);
+            return Center(
+              child: label == '⌫'
+                  ? Icon(Icons.backspace_outlined, size: size, color: foreground, semanticLabel: context.l10n.backspace)
+                  // Half-width keys (000, 00) shrink their label to fit.
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          label,
+                          style: TextStyle(fontSize: size, color: foreground, fontWeight: FontWeight.w500),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+            );
+          },
         ),
       ),
     );

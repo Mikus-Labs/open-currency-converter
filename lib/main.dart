@@ -51,6 +51,16 @@ class _ConverterAppState extends State<ConverterApp> {
           themeMode: widget.state.themeMode,
           theme: ThemeData(colorSchemeSeed: seed, brightness: Brightness.light),
           darkTheme: ThemeData(colorSchemeSeed: seed, brightness: Brightness.dark),
+          builder: (context, child) {
+            // Tablets get larger text so rows don't look phone-sized next to the keypad.
+            final media = MediaQuery.of(context);
+            if (media.size.shortestSide < 600) return child!;
+            final scale = media.textScaler.scale(14) / 14 * 1.2;
+            return MediaQuery(
+              data: media.copyWith(textScaler: TextScaler.linear(scale)),
+              child: child!,
+            );
+          },
           home: const ConverterScreen(),
         ),
       ),

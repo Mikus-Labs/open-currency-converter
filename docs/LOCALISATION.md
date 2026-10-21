@@ -24,7 +24,8 @@ app alone in the system settings.
    `ios/Runner/Info.plist` and Android's `res/xml/locales_config.xml`.
 3. **Check it:** `flutter test`. `test/l10n_test.dart` fails if the file is
    missing a message, has keys the template doesn't, or dropped a
-   `{placeholder}`.
+   `{placeholder}`. `test/layout_test.dart` renders the app in the new
+   language on phones and tablets and fails if any text overflows.
 4. Commit the ARB file together with the files the script changed. CI reruns
    the script and fails if anything is out of date.
 
