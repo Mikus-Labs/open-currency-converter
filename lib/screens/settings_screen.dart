@@ -93,16 +93,18 @@ class SettingsScreen extends StatelessWidget {
                     },
                   ),
           ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.coffee_outlined),
-            title: Text(l10n.donate),
-            subtitle: Text(l10n.donateSubtitle),
-            trailing: const Icon(Icons.open_in_new),
-            onTap: () async {
-              if (!await openLink(donateUrl) && context.mounted) showMessage(context, l10n.linkError);
-            },
-          ),
+          if (showDonate) ...[
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.coffee_outlined),
+              title: Text(l10n.donate),
+              subtitle: Text(l10n.donateSubtitle),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () async {
+                if (!await openLink(donateUrl) && context.mounted) showMessage(context, l10n.linkError);
+              },
+            ),
+          ],
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             child: Text(

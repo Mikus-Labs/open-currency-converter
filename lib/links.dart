@@ -1,4 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+/// The App Store wants tips to go through In-App Purchase, so the iOS app
+/// leaves the donation link out. The web app keeps it, even on iPhones.
+bool get showDonate => kIsWeb || defaultTargetPlatform != TargetPlatform.iOS;
 
 /// Donation page. Placeholder until the Buy Me a Coffee page exists.
 // TODO: replace with the real https://buymeacoffee.com/<name> link.

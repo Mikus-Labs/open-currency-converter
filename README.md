@@ -65,6 +65,8 @@ Planned work is in [TODO.md](TODO.md).
 
 Converter is free, with no ads and no subscriptions. If it's useful to you,
 you can [buy me a coffee](https://buymeacoffee.com/) <!-- TODO: real link -->.
+The Android and web apps link here from Settings; the iOS app doesn't, because
+the App Store only allows tips through In-App Purchase.
 
 ## Privacy and licence
 

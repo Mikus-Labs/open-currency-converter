@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:open_converter/app_state.dart';
@@ -168,5 +169,19 @@ void main() {
     await tester.pump();
     expect(find.text('000'), findsOneWidget);
     expect(find.text('00'), findsNothing);
+  });
+
+  testWidgets('the iOS app has no donation link', (tester) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    final state = (await tester.runAsync(testState))!;
+    await tester.pumpWidget(ConverterApp(state: state));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(PopupMenuButton<Widget>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.textContaining('No ads, no accounts'), 200);
+    expect(find.text('Buy me a coffee'), findsNothing);
+    debugDefaultTargetPlatformOverride = null;
   });
 }
