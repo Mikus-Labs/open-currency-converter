@@ -116,6 +116,15 @@ void main() {
     // EUR row shows 10 USD at the mocked 0.9 rate.
     expect(find.text('9'), findsWidgets);
 
+    // The split zero keys type three and two zeros.
+    await tester.tap(find.text('C'));
+    await tester.tap(find.text('1'));
+    await tester.tap(find.text('000'));
+    await tester.tap(find.text('00'));
+    await tester.pump();
+    expect(state.expr, '100000');
+    expect(tester.getCenter(find.text('000')).dx, lessThan(tester.getCenter(find.text('00')).dx));
+
     // Dragging a row's handle reorders it in place.
     expect(find.byIcon(Icons.drag_indicator), findsNWidgets(5));
     final gesture = await tester.startGesture(tester.getCenter(find.byIcon(Icons.drag_indicator).first));
