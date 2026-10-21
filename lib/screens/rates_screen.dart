@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../currency_kind.dart';
 import '../format.dart';
 import '../l10n/l10n.dart';
 import '../widgets.dart';
@@ -30,6 +31,7 @@ class _RatesScreenState extends State<RatesScreen> {
     final codes =
         state.snapshot.rates.keys
             .where((c) => c != base)
+            .where(state.currencyFilter.matches)
             .where((c) => q.isEmpty || c.contains(q) || state.nameOf(c).toLowerCase().contains(q))
             .toList()
           ..sort((a, b) {
@@ -43,14 +45,20 @@ class _RatesScreenState extends State<RatesScreen> {
       appBar: AppBar(
         title: Text(l10n.exchangeRates),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(64),
+          preferredSize: const Size.fromHeight(112),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-            child: SearchBar(
-              hintText: l10n.search,
-              leading: const Icon(Icons.search),
-              elevation: const WidgetStatePropertyAll(0),
-              onChanged: (v) => setState(() => _query = v),
+            child: Column(
+              children: [
+                SearchBar(
+                  hintText: l10n.search,
+                  leading: const Icon(Icons.search),
+                  elevation: const WidgetStatePropertyAll(0),
+                  onChanged: (v) => setState(() => _query = v),
+                ),
+                const SizedBox(height: 8),
+                const SizedBox(width: double.infinity, child: CurrencyFilterBar()),
+              ],
             ),
           ),
         ),
@@ -77,7 +85,7 @@ class _RatesScreenState extends State<RatesScreen> {
                 final inverse = state.convert(1, code, base);
                 return ListTile(
                   leading: CurrencyBadge(code, size: 36),
-                  title: Text(code.toUpperCase()),
+                  title: CurrencyTitle(code),
                   subtitle: Text(state.nameOf(code), overflow: TextOverflow.ellipsis),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

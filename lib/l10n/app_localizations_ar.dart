@@ -144,6 +144,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notFound => 'لا توجد نتائج';
 
   @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get filterNoCrypto => 'بدون المشفرة';
+
+  @override
+  String get filterCryptoOnly => 'المشفرة فقط';
+
+  @override
+  String get kindFiat => 'ورقية';
+
+  @override
+  String get kindCrypto => 'مشفرة';
+
+  @override
+  String get kindMetal => 'معدن';
+
+  @override
   String get addToFavorites => 'إضافة إلى المفضلة';
 
   @override

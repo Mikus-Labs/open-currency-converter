@@ -287,6 +287,42 @@ abstract class AppLocalizations {
   /// **'Not found'**
   String get notFound;
 
+  /// Currency list filter: show every currency.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// Currency list filter: hide cryptocurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'No crypto'**
+  String get filterNoCrypto;
+
+  /// Currency list filter: show only cryptocurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Crypto only'**
+  String get filterCryptoOnly;
+
+  /// Short tag on a government-issued currency such as USD or EUR.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiat'**
+  String get kindFiat;
+
+  /// Short tag on a cryptocurrency such as BTC.
+  ///
+  /// In en, this message translates to:
+  /// **'Crypto'**
+  String get kindCrypto;
+
+  /// Short tag on a precious metal such as gold (XAU).
+  ///
+  /// In en, this message translates to:
+  /// **'Metal'**
+  String get kindMetal;
+
   /// Tooltip for the star button; favourites are listed first in the currency picker.
   ///
   /// In en, this message translates to:

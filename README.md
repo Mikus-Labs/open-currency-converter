@@ -8,7 +8,8 @@ No ads, no subscriptions, no accounts, no tracking.
 - Calculator keypad with `+ − × ÷ %` (e.g. `200+10%` = 220) on any row
 - Any number of currencies; tap a row to convert from it, long-press for
   change / copy / paste / remove
-- 300+ currencies including major crypto, with search and favorites
+- 300+ currencies including major crypto, with search and favorites; each is
+  tagged fiat, crypto or metal, and lists can hide or show only crypto
 - Exchange-rates table against any base currency
 - Own rates: override a market rate with your bank's or exchange office's
 - Works offline: last downloaded rates are cached and a snapshot ships with

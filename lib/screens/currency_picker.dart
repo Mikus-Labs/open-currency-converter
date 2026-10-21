@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../currency_kind.dart';
 import '../l10n/l10n.dart';
 import '../widgets.dart';
 
@@ -34,6 +35,7 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
     final codes =
         state.snapshot.rates.keys
             .where((c) => !widget.exclude.contains(c))
+            .where(state.currencyFilter.matches)
             .where((c) => q.isEmpty || c.contains(q) || state.nameOf(c).toLowerCase().contains(q))
             .toList()
           ..sort((a, b) {
@@ -48,15 +50,21 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
       appBar: AppBar(
         title: Text(widget.title),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(64),
+          preferredSize: const Size.fromHeight(112),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-            child: SearchBar(
-              autoFocus: true,
-              hintText: l10n.searchCodeOrName,
-              leading: const Icon(Icons.search),
-              elevation: const WidgetStatePropertyAll(0),
-              onChanged: (v) => setState(() => _query = v),
+            child: Column(
+              children: [
+                SearchBar(
+                  autoFocus: true,
+                  hintText: l10n.searchCodeOrName,
+                  leading: const Icon(Icons.search),
+                  elevation: const WidgetStatePropertyAll(0),
+                  onChanged: (v) => setState(() => _query = v),
+                ),
+                const SizedBox(height: 8),
+                const SizedBox(width: double.infinity, child: CurrencyFilterBar()),
+              ],
             ),
           ),
         ),
@@ -70,7 +78,7 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
                 final isFavorite = state.favorites.contains(code);
                 return ListTile(
                   leading: CurrencyBadge(code),
-                  title: Text(code.toUpperCase()),
+                  title: CurrencyTitle(code),
                   subtitle: Text(state.nameOf(code)),
                   trailing: IconButton(
                     tooltip: isFavorite ? l10n.removeFromFavorites : l10n.addToFavorites,

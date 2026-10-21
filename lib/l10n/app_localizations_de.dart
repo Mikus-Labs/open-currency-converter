@@ -117,6 +117,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notFound => 'Nichts gefunden';
 
   @override
+  String get filterAll => 'Alle';
+
+  @override
+  String get filterNoCrypto => 'Ohne Krypto';
+
+  @override
+  String get filterCryptoOnly => 'Nur Krypto';
+
+  @override
+  String get kindFiat => 'Fiat';
+
+  @override
+  String get kindCrypto => 'Krypto';
+
+  @override
+  String get kindMetal => 'Metall';
+
+  @override
   String get addToFavorites => 'Zu Favoriten hinzufügen';
 
   @override
