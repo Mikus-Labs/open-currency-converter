@@ -25,16 +25,17 @@ class _RatesScreenState extends State<RatesScreen> {
     final q = _query.trim().toLowerCase();
 
     // Shown currencies first, then everything else alphabetically.
-    final codes = state.snapshot.rates.keys
-        .where((c) => c != base)
-        .where((c) => q.isEmpty || c.contains(q) || state.nameOf(c).toLowerCase().contains(q))
-        .toList()
-      ..sort((a, b) {
-        final sa = state.selected.indexOf(a), sb = state.selected.indexOf(b);
-        if ((sa == -1) != (sb == -1)) return sa == -1 ? 1 : -1;
-        if (sa != -1) return sa.compareTo(sb);
-        return a.compareTo(b);
-      });
+    final codes =
+        state.snapshot.rates.keys
+            .where((c) => c != base)
+            .where((c) => q.isEmpty || c.contains(q) || state.nameOf(c).toLowerCase().contains(q))
+            .toList()
+          ..sort((a, b) {
+            final sa = state.selected.indexOf(a), sb = state.selected.indexOf(b);
+            if ((sa == -1) != (sb == -1)) return sa == -1 ? 1 : -1;
+            if (sa != -1) return sa.compareTo(sb);
+            return a.compareTo(b);
+          });
 
     return Scaffold(
       appBar: AppBar(

@@ -55,23 +55,25 @@ class OwnRatesScreen extends StatelessWidget {
               ),
             ),
           for (final code in codes)
-            Builder(builder: (context) {
-              final own = state.ownRates[code]!;
-              final market = state.marketRate(code);
-              final marketBase = state.marketRate(own.base);
-              final marketValue = market != null && marketBase != null ? market / marketBase : null;
-              return ListTile(
-                leading: CurrencyBadge(code),
-                title: Text('1 ${own.base.toUpperCase()} = ${formatAmount(own.value, 4)} ${code.toUpperCase()}'),
-                subtitle: marketValue == null ? null : Text('Market: ${formatAmount(marketValue, 4)}'),
-                onTap: () => _edit(context, state, code),
-                trailing: IconButton(
-                  tooltip: 'Delete',
-                  icon: const Icon(Icons.delete_outline),
-                  onPressed: () => state.removeOwnRate(code),
-                ),
-              );
-            }),
+            Builder(
+              builder: (context) {
+                final own = state.ownRates[code]!;
+                final market = state.marketRate(code);
+                final marketBase = state.marketRate(own.base);
+                final marketValue = market != null && marketBase != null ? market / marketBase : null;
+                return ListTile(
+                  leading: CurrencyBadge(code),
+                  title: Text('1 ${own.base.toUpperCase()} = ${formatAmount(own.value, 4)} ${code.toUpperCase()}'),
+                  subtitle: marketValue == null ? null : Text('Market: ${formatAmount(marketValue, 4)}'),
+                  onTap: () => _edit(context, state, code),
+                  trailing: IconButton(
+                    tooltip: 'Delete',
+                    icon: const Icon(Icons.delete_outline),
+                    onPressed: () => state.removeOwnRate(code),
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );

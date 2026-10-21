@@ -28,10 +28,7 @@ class CurrencyBadge extends StatelessWidget {
       width: size,
       height: size,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: scheme.primaryContainer,
-        borderRadius: BorderRadius.circular(size * 0.3),
-      ),
+      decoration: BoxDecoration(color: scheme.primaryContainer, borderRadius: BorderRadius.circular(size * 0.3)),
       child: Text(
         label.length > 4 ? label.substring(0, 4) : label,
         style: TextStyle(

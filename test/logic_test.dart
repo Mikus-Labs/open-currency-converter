@@ -31,8 +31,7 @@ void main() {
   });
 
   group('applyKey', () {
-    String type(String keys, [String start = '']) =>
-        keys.split('').fold(start, (e, k) => applyKey(e, k));
+    String type(String keys, [String start = '']) => keys.split('').fold(start, (e, k) => applyKey(e, k));
 
     test('builds expressions', () {
       expect(type('12+3'), '12+3');

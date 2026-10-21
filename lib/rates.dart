@@ -15,13 +15,10 @@ class RatesSnapshot {
   final Map<String, String> names;
 
   factory RatesSnapshot.fromJson(Map<String, dynamic> json) => RatesSnapshot(
-        date: json['date'] as String,
-        rates: {
-          for (final e in (json['rates'] as Map<String, dynamic>).entries)
-            e.key: (e.value as num).toDouble(),
-        },
-        names: Map<String, String>.from(json['names'] as Map),
-      );
+    date: json['date'] as String,
+    rates: {for (final e in (json['rates'] as Map<String, dynamic>).entries) e.key: (e.value as num).toDouble()},
+    names: Map<String, String>.from(json['names'] as Map),
+  );
 
   Map<String, dynamic> toJson() => {'date': date, 'rates': rates, 'names': names};
 
@@ -48,10 +45,7 @@ class RatesService {
     Object? lastError;
     for (final base in mirrors) {
       try {
-        final responses = await Future.wait([
-          _get('$base/currencies/usd.min.json'),
-          _get('$base/currencies.min.json'),
-        ]);
+        final responses = await Future.wait([_get('$base/currencies/usd.min.json'), _get('$base/currencies.min.json')]);
         return parse(responses[0], responses[1]);
       } catch (e) {
         lastError = e;

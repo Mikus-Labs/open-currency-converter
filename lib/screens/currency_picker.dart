@@ -6,7 +6,9 @@ import '../widgets.dart';
 /// Opens a searchable currency list and returns the chosen code.
 Future<String?> pickCurrency(BuildContext context, {String title = 'Choose currency', Set<String> exclude = const {}}) {
   return Navigator.of(context).push<String>(
-    MaterialPageRoute(builder: (_) => CurrencyPickerScreen(title: title, exclude: exclude)),
+    MaterialPageRoute(
+      builder: (_) => CurrencyPickerScreen(title: title, exclude: exclude),
+    ),
   );
 }
 
@@ -27,17 +29,18 @@ class _CurrencyPickerScreenState extends State<CurrencyPickerScreen> {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final q = _query.trim().toLowerCase();
-    final codes = state.snapshot.rates.keys
-        .where((c) => !widget.exclude.contains(c))
-        .where((c) => q.isEmpty || c.contains(q) || state.nameOf(c).toLowerCase().contains(q))
-        .toList()
-      ..sort((a, b) {
-        // Favorites first, then exact code matches, then alphabetical.
-        final fa = state.favorites.contains(a), fb = state.favorites.contains(b);
-        if (fa != fb) return fa ? -1 : 1;
-        if (q.isNotEmpty && (a == q) != (b == q)) return a == q ? -1 : 1;
-        return a.compareTo(b);
-      });
+    final codes =
+        state.snapshot.rates.keys
+            .where((c) => !widget.exclude.contains(c))
+            .where((c) => q.isEmpty || c.contains(q) || state.nameOf(c).toLowerCase().contains(q))
+            .toList()
+          ..sort((a, b) {
+            // Favorites first, then exact code matches, then alphabetical.
+            final fa = state.favorites.contains(a), fb = state.favorites.contains(b);
+            if (fa != fb) return fa ? -1 : 1;
+            if (q.isNotEmpty && (a == q) != (b == q)) return a == q ? -1 : 1;
+            return a.compareTo(b);
+          });
 
     return Scaffold(
       appBar: AppBar(

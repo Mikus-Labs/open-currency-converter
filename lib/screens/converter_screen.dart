@@ -85,7 +85,11 @@ class ConverterScreen extends StatelessWidget {
                       icon: const Icon(Icons.add),
                       label: const Text('Add currency'),
                       onPressed: () async {
-                        final code = await pickCurrency(context, title: 'Add currency', exclude: state.selected.toSet());
+                        final code = await pickCurrency(
+                          context,
+                          title: 'Add currency',
+                          exclude: state.selected.toSet(),
+                        );
                         if (code != null) state.addCurrency(code);
                       },
                     ),
@@ -116,11 +120,27 @@ class _ConverterRow extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(leading: const Icon(Icons.swap_horiz), title: const Text('Change currency'), onTap: () => Navigator.pop(context, 'change')),
-            ListTile(leading: const Icon(Icons.copy), title: const Text('Copy'), onTap: () => Navigator.pop(context, 'copy')),
-            ListTile(leading: const Icon(Icons.content_paste), title: const Text('Paste'), onTap: () => Navigator.pop(context, 'paste')),
+            ListTile(
+              leading: const Icon(Icons.swap_horiz),
+              title: const Text('Change currency'),
+              onTap: () => Navigator.pop(context, 'change'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.copy),
+              title: const Text('Copy'),
+              onTap: () => Navigator.pop(context, 'copy'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.content_paste),
+              title: const Text('Paste'),
+              onTap: () => Navigator.pop(context, 'paste'),
+            ),
             if (state.selected.length > 1)
-              ListTile(leading: const Icon(Icons.remove_circle_outline), title: const Text('Remove'), onTap: () => Navigator.pop(context, 'remove')),
+              ListTile(
+                leading: const Icon(Icons.remove_circle_outline),
+                title: const Text('Remove'),
+                onTap: () => Navigator.pop(context, 'remove'),
+              ),
           ],
         ),
       ),
@@ -195,7 +215,10 @@ class _ConverterRow extends StatelessWidget {
                       if (state.hasOwnRate(code))
                         Padding(
                           padding: const EdgeInsets.only(left: 4),
-                          child: Tooltip(message: 'Own rate', child: Icon(Icons.edit_note, size: 18, color: theme.colorScheme.tertiary)),
+                          child: Tooltip(
+                            message: 'Own rate',
+                            child: Icon(Icons.edit_note, size: 18, color: theme.colorScheme.tertiary),
+                          ),
                         ),
                     ],
                   ),
@@ -317,15 +340,15 @@ class _Key extends StatelessWidget {
     final background = label == '='
         ? scheme.primary
         : isOperator
-            ? scheme.secondaryContainer
-            : isFunction
-                ? scheme.surfaceContainerHighest
-                : scheme.surface;
+        ? scheme.secondaryContainer
+        : isFunction
+        ? scheme.surfaceContainerHighest
+        : scheme.surface;
     final foreground = label == '='
         ? scheme.onPrimary
         : isOperator
-            ? scheme.onSecondaryContainer
-            : scheme.onSurface;
+        ? scheme.onSecondaryContainer
+        : scheme.onSurface;
 
     return Material(
       color: background,
@@ -337,7 +360,10 @@ class _Key extends StatelessWidget {
         child: Center(
           child: label == '⌫'
               ? Icon(Icons.backspace_outlined, color: foreground, semanticLabel: 'Backspace')
-              : Text(label, style: TextStyle(fontSize: 24, color: foreground, fontWeight: FontWeight.w500)),
+              : Text(
+                  label,
+                  style: TextStyle(fontSize: 24, color: foreground, fontWeight: FontWeight.w500),
+                ),
         ),
       ),
     );
