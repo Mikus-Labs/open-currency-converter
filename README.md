@@ -65,7 +65,10 @@ Planned work is in [TODO.md](TODO.md).
 ## Support the project
 
 Converter is free, with no ads and no subscriptions. If it's useful to you,
-you can [buy me a coffee](https://buymeacoffee.com/) <!-- TODO: real link -->.
+you can buy me a coffee:
+
+<a href="https://buymeacoffee.com/zacharymikus"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=zacharymikus&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" alt="Buy me a coffee" height="48"></a>
+
 The Android and web apps link here from Settings; the iOS app doesn't, because
 the App Store only allows tips through In-App Purchase.
 
