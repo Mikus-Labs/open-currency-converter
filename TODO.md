@@ -37,11 +37,10 @@ section 1.
 
 ### 2. Decisions
 
-- [ ] **You: app name.** The Play title has a 30-character limit and needs
-      to be findable. "Converter" alone is generic and crowded. The name
-      appears in the Android label (`android:label`), `appTitle` in every
-      ARB file, the iOS display name and the README. Claude updates them
-      once you choose.
+- [x] **App name: Open Currency Converter** (23 of Play's 30 characters).
+      It's the store title, README, privacy policy and web app name. The
+      home-screen label and in-app title stay "Converter" (translated),
+      which fits under the icon.
 - [x] **App ID:** `co.mikuslabs.openconverter`, from the
       mikuslabs.co domain. It can never change after the first upload.
 - [ ] **You: privacy policy URL.** Settled by open sourcing (section 2b):

@@ -315,7 +315,7 @@ jobs:
 
       - uses: softprops/action-gh-release@v3
         with:
-          name: Converter ${{ needs.version.outputs.name }} (build ${{ needs.version.outputs.number }})
+          name: Open Currency Converter ${{ needs.version.outputs.name }} (build ${{ needs.version.outputs.number }})
           draft: true
           generate_release_notes: true
           fail_on_unmatched_files: true

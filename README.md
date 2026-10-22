@@ -1,4 +1,4 @@
-# Converter
+# Open Currency Converter
 
 An ad-free, offline-first currency converter for Android, iOS and the web.
 No ads, no subscriptions, no accounts, no tracking.
@@ -66,7 +66,7 @@ Contributions and translations are welcome; see [CONTRIBUTING.md](CONTRIBUTING.m
 
 ## Support the project
 
-Converter is free, with no ads and no subscriptions. If it's useful to you,
+Open Currency Converter is free, with no ads and no subscriptions. If it's useful to you,
 you can buy me a coffee on Ko-fi:
 
 <a href="https://ko-fi.com/mikuslabs"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support me on Ko-fi" height="36"></a>
