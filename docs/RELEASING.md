@@ -6,6 +6,7 @@ Two GitHub Actions workflows live in `.github/workflows/`:
 |---|---|---|
 | `ci.yml` | every push to `main` and every PR | format check, `flutter analyze`, `flutter test` |
 | `release.yml` | tags `vX.Y.Z`, or manually | tests, then a signed Android **AAB + APK** and an App Store **IPA**, attached to a **draft** GitHub Release |
+| `android-smoke.yml` | PRs that change `pubspec.lock` or `android/`, each release, or manually | installs a release APK on an Android emulator and checks the app opens; the log and a screenshot are saved as an artifact |
 
 App ID on both platforms: `io.github.zacharymikus.openconverter`.
 

@@ -153,6 +153,11 @@ jobs:
         if: always()
         run: rm -f "$RUNNER_TEMP/upload-keystore.jks"
 
+  smoke:
+    name: Android smoke test
+    needs: test
+    uses: ./.github/workflows/android-smoke.yml
+
   ios:
     name: iOS (IPA)
     needs: [test, version]
@@ -284,9 +289,9 @@ jobs:
     # Runs when iOS was skipped too, as long as nothing failed.
     if: >-
       !cancelled() && startsWith(github.ref, 'refs/tags/v')
-      && needs.android.result == 'success'
+      && needs.android.result == 'success' && needs.smoke.result == 'success'
       && contains(fromJSON('["success", "skipped"]'), needs.ios.result)
-    needs: [version, android, ios]
+    needs: [version, android, smoke, ios]
     runs-on: ubuntu-latest
     permissions:
       contents: write
