@@ -89,6 +89,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+          # Gradle dependencies are most of the Android build time.
+          cache: gradle
 
       - uses: subosito/flutter-action@v2
         with:
