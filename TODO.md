@@ -42,13 +42,8 @@ section 1.
       appears in the Android label (`android:label`), `appTitle` in every
       ARB file, the iOS display name and the README. Claude updates them
       once you choose.
-- [ ] **You: app ID.** It can never change after the first upload to Play,
-      so settle it before moving the repo matters. It's currently
-      `io.github.zacharymikus.openconverter`. Under the organisation it would
-      be `io.github.mikus_labs.openconverter` (Java IDs can't contain `-`), or
-      `com.<domain>.<app>` if Mikus Labs has its own domain. Claude renames
-      it everywhere: Android, iOS, the workflows, the smoke test and the
-      docs.
+- [x] **App ID:** `co.mikuslabs.openconverter`, from the
+      mikuslabs.co domain. It can never change after the first upload.
 - [ ] **You: privacy policy URL.** Settled by open sourcing (section 2b):
       GitHub Pages or the file on GitHub.
 - [ ] **You: support email.** Play shows a contact email publicly on the
@@ -63,11 +58,10 @@ section 1.
 Do this before the store work: Play needs a public privacy policy URL, and
 the listing and policy should point at the final repo address.
 
-- [ ] **Claude: prepare the repo for going public.** Already checked: no
+- [x] **Claude: prepare the repo for going public.** Already checked: no
       secrets or keys in the git history, no material from other apps, one
-      author (GitHub no-reply email), MIT licence. Still to do: add
-      `CONTRIBUTING.md` (how to build, test and add a translation), plus
-      issue templates for bugs and translations.
+      author (GitHub no-reply email), MIT licence. Added `CONTRIBUTING.md`
+      and issue templates for bugs and translations.
 - [ ] **You: transfer** the repo to the `Mikus-Labs` organisation
       (Settings → General → Transfer ownership; note the hyphen). GitHub
       redirects the old URLs, including existing release links.

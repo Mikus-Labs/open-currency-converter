@@ -9,7 +9,7 @@ plugins {
 val releaseKeystore = System.getenv("ANDROID_KEYSTORE_PATH")?.takeIf { it.isNotBlank() }
 
 android {
-    namespace = "io.github.zacharymikus.openconverter"
+    namespace = "co.mikuslabs.openconverter"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "io.github.zacharymikus.openconverter"
+        applicationId = "co.mikuslabs.openconverter"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         // Uses the version code from pubspec.yaml, or --build-number on the command line.

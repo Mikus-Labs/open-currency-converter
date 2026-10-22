@@ -8,7 +8,7 @@ Two GitHub Actions workflows live in `.github/workflows/`:
 | `release.yml` | tags `vX.Y.Z`, or manually | tests, then a signed Android **AAB + APK** and an App Store **IPA**, attached to a **draft** GitHub Release |
 | `android-smoke.yml` | PRs that change `pubspec.lock` or `android/`, each release, or manually | installs a release APK on an Android emulator and checks the app opens; the log and a screenshot are saved as an artifact |
 
-App ID on both platforms: `io.github.zacharymikus.openconverter`.
+App ID on both platforms: `co.mikuslabs.openconverter`.
 
 ## Cutting a release
 
@@ -75,7 +75,7 @@ Needs the [Apple Developer Program](https://developer.apple.com/programs/)
 
 1. **App ID:** developer.apple.com → Certificates, IDs & Profiles →
    Identifiers → **+** → App IDs → App → bundle ID
-   `io.github.zacharymikus.openconverter` (explicit). No extra capabilities
+   `co.mikuslabs.openconverter` (explicit). No extra capabilities
    are needed.
 2. **Distribution certificate:** Xcode → Settings → Accounts → your team →
    *Manage Certificates* → **+** → *Apple Distribution*. Then in Keychain
@@ -103,12 +103,8 @@ a year; renew them and update the two base64 secrets.
   hides the Settings entry in the iOS app. Don't mention donations in the App
   Store listing either. Google Play doesn't require Play Billing for donations.
 - **Privacy policy URL:** both stores require one. The policy is
-  [`PRIVACY.md`](../PRIVACY.md), but the stores need a public URL for it.
-  Either make the repo public and use
-  `https://github.com/ZacharyMikus/open-converter/blob/main/PRIVACY.md`, or
-  publish it with GitHub Pages (Pages on a private repo needs a paid GitHub
-  plan). The contact link in the policy is the repo's Issues page, which also
-  needs a public repo.
+  [`PRIVACY.md`](../PRIVACY.md), published with GitHub Pages at
+  <https://mikus-labs.github.io/open-converter/PRIVACY>.
 - **Privacy forms:** the app collects no data and has no ads or tracking, so
   Play *Data safety* is "No data collected" and App Store *App Privacy* is
   "Data Not Collected". Export compliance is pre-answered:

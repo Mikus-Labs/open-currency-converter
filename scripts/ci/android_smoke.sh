@@ -8,7 +8,7 @@ set -uo pipefail
 
 apk="$1"
 out="$2"
-pkg=io.github.zacharymikus.openconverter
+pkg=co.mikuslabs.openconverter
 mkdir -p "$out"
 
 adb install -r "$apk" || exit 1

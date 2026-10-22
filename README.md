@@ -62,6 +62,8 @@ file plus `dart run tool/l10n.dart`. See [docs/LOCALISATION.md](docs/LOCALISATIO
 
 Planned work is in [TODO.md](TODO.md).
 
+Contributions and translations are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Support the project
 
 Converter is free, with no ads and no subscriptions. If it's useful to you,
