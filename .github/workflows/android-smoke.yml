@@ -48,7 +48,10 @@ jobs:
 
       - name: Locate downloaded APK
         if: inputs.artifact != '' || inputs.release_tag != ''
-        run: echo "APK=$(find apk -name "*.apk" | head -1)" >> "$GITHUB_ENV"
+        # The emulator is x86_64; releases have one APK per processor type.
+        run: |
+          apk="$(find apk -name "*x86_64*.apk" | head -1)"
+          echo "APK=${apk:-$(find apk -name "*.apk" | head -1)}" >> "$GITHUB_ENV"
 
       # Building the app and the emulator image together overflow the runner's
       # disk, so drop preinstalled toolchains this job doesn't use.

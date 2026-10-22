@@ -76,7 +76,8 @@ jobs:
 
   android:
     name: Android (AAB + APK)
-    needs: [test, version]
+    # Runs alongside the tests (Linux minutes are cheap); nothing ships unless both pass.
+    needs: version
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -96,6 +97,9 @@ jobs:
         with:
           flutter-version-file: pubspec.yaml
           cache: true
+          # Separate from the test job's cache so it keeps the Android engine
+          # files Flutter downloads on the first Android build.
+          cache-key: 'flutter-android-:os:-:channel:-:version:-:arch:-:hash:'
 
       - name: Install upload keystore
         env:
@@ -121,23 +125,27 @@ jobs:
         run: |
           args=(--release --build-name "$VERSION" --build-number "$BUILD_NUMBER")
           flutter build appbundle "${args[@]}"
-          flutter build apk "${args[@]}"
+          # One APK per processor type: a third of the size of a universal APK.
+          flutter build apk --split-per-abi "${args[@]}"
 
       - name: Verify signature and collect artifacts
         run: |
           mkdir -p dist
           aab=build/app/outputs/bundle/release/app-release.aab
-          apk=build/app/outputs/flutter-apk/app-release.apk
           apksigner="$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)"
-          apk_signer="$("$apksigner" verify --print-certs "$apk" | grep -m1 'certificate DN:')"
-          aab_signer="$(keytool -printcert -jarfile "$aab" | grep -m1 'Owner:')"
-          echo "APK $apk_signer"
-          echo "AAB signed by $aab_signer"
-          if [ -n "${ANDROID_KEYSTORE_PATH:-}" ] && [[ "$apk_signer$aab_signer" == *"Android Debug"* ]]; then
+          signers="$(keytool -printcert -jarfile "$aab" | grep -m1 'Owner:')"
+          echo "AAB signed by $signers"
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            apk="build/app/outputs/flutter-apk/app-$abi-release.apk"
+            signer="$("$apksigner" verify --print-certs "$apk" | grep -m1 'certificate DN:')"
+            echo "$abi APK $signer"
+            signers="$signers $signer"
+            cp "$apk" "dist/open-converter-$VERSION-$BUILD_NUMBER-$abi$SUFFIX.apk"
+          done
+          if [ -n "${ANDROID_KEYSTORE_PATH:-}" ] && [[ "$signers" == *"Android Debug"* ]]; then
             echo "::error::Release build is debug-signed even though a keystore was provided."
             exit 1
           fi
-          cp "$apk" "dist/open-converter-$VERSION-$BUILD_NUMBER$SUFFIX.apk"
           if [ -z "${SUFFIX:-}" ]; then
             cp "$aab" "dist/open-converter-$VERSION-$BUILD_NUMBER.aab"
           fi
@@ -292,9 +300,10 @@ jobs:
     # Runs when iOS was skipped too, as long as nothing failed.
     if: >-
       !cancelled() && startsWith(github.ref, 'refs/tags/v')
-      && needs.android.result == 'success' && needs.smoke.result == 'success'
+      && needs.test.result == 'success' && needs.android.result == 'success'
+      && needs.smoke.result == 'success'
       && contains(fromJSON('["success", "skipped"]'), needs.ios.result)
-    needs: [version, android, smoke, ios]
+    needs: [test, version, android, smoke, ios]
     runs-on: ubuntu-latest
     permissions:
       contents: write

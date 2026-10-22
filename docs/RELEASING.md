@@ -27,7 +27,11 @@ git push origin v1.0.0
     [Transporter](https://apps.apple.com/app/transporter/id1450874784) app
     (sign in, drag the file in, *Deliver*). It appears in App Store Connect →
     TestFlight after processing, and from there you submit it for review.
-- The `.apk` is for sideloading or stores that take APKs. Play wants the `.aab`.
+- The `.apk` files are for sideloading or stores that take APKs; Play wants
+  the `.aab`. There's one APK per processor type, each a third the size of a
+  universal APK: `arm64-v8a` for almost every phone from the last decade,
+  `armeabi-v7a` for older 32-bit phones, `x86_64` for emulators and some
+  Chromebooks.
 
 **Test run:** *Actions → Release → Run workflow* (or
 `gh workflow run release.yml`) builds without creating a release. It builds
