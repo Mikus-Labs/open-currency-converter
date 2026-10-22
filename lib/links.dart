@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 bool get showDonate => kIsWeb || defaultTargetPlatform != TargetPlatform.iOS;
 
 /// Donation page.
-final donateUrl = Uri.parse('https://buymeacoffee.com/zacharymikus');
+final donateUrl = Uri.parse('https://ko-fi.com/mikuslabs');
 
 /// Opens [url] in the browser. Returns false if nothing could open it.
 Future<bool> openLink(Uri url) async {

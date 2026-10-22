@@ -31,8 +31,8 @@ any web request they reveal your device's IP address and basic request details
 makes no other network requests.
 
 **Buy me a coffee** in Settings opens the donation page in your browser. The
-app itself sends nothing; anything you do on that page is covered by Buy Me a
-Coffee's privacy policy.
+app itself sends nothing; anything you do on that page is covered by Ko-fi's
+privacy policy.
 
 ## Clipboard and sharing
 
