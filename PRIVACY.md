@@ -58,4 +58,4 @@ with a new effective date.
 ## Contact
 
 Questions about this policy can be raised at
-<https://github.com/ZacharyMikus/open-converter/issues>.
+<https://github.com/Mikus-Labs/open-converter/issues>.
