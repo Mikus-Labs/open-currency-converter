@@ -15,11 +15,11 @@ section 1.
       the GitHub Release waits for the iOS job. Make the iOS job skip itself
       when there are no iOS secrets, and add an "Android only" option to
       manual runs so they don't use macOS minutes.
-- [ ] **You: approve a manual Android-only release run.** The Android
-      release build has never been compiled: this Mac has no Android SDK and
-      CI only runs the tests. It runs on Linux, so it's cheap, and it
-      produces a debug-signed APK.
-- [ ] **You: install that APK on an Android phone and test:**
+- [x] **Build the Android release in CI.** The first build (v0.1.0) hung on
+      the launch screen because of a plugin bug in release builds; fixed in
+      v0.2.0. An emulator smoke test now checks every release and
+      dependency update.
+- [ ] **You: install the v0.2.0 APK on an Android phone and test:**
   - [ ] the keypad, including `000`/`00`, `%` and long-press backspace
   - [ ] keypad vibration
   - [ ] adding, removing and reordering currencies
