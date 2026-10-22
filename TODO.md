@@ -98,7 +98,7 @@ that build iOS (10× the cost of Linux on a private repo).
 
 - [ ] **Short description** (80 characters max) and **full description**
       (4,000 max). No mention of rankings, "best", or other apps. Mention the
-      Buy Me a Coffee link only if you want to; Play allows it.
+      Ko-fi link only if you want to; Play allows it.
 - [ ] **App icon, 512×512 PNG.** Resize `assets/icon/icon.png`.
 - [ ] **Feature graphic, 1024×500.** Required.
 - [ ] **Phone screenshots**, 2 to 8. Claude can render them from the app at
