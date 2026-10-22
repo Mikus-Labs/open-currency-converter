@@ -16,7 +16,7 @@
 - **Test builds:** v0.1.0 (broken, hangs on launch), v0.2.0 (works; old app
   ID). Both are debug-signed GitHub pre-releases.
 - **Open pull requests:** #2 rating prompt (checks pass, waiting for your
-  OK to merge), #4 rates fallback tests (merges itself when CI passes).
+  OK to merge).
 
 ## Before publishing on Google Play
 
@@ -33,7 +33,7 @@ Google Play first, then the App Store (next section). Each item is marked
       every pull request that changes dependencies or `android/`. It caught
       the v0.1.0 launch hang (a plugin bug in release builds).
 - [x] **Rates fallback:** jsDelivr first, then `currency-api.pages.dev`, as
-      the exchange-api README asks. Tested in `test/rates_test.dart` (#4).
+      the exchange-api README asks. Tested in `test/rates_test.dart`.
 - [ ] **Claude: v0.3.0 test build** once #2 is merged: the new app ID, the
       rating prompt and the Ko-fi link. Uninstall v0.2.0 first; Android sees
       the new ID as a different app.
