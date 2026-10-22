@@ -14,6 +14,11 @@ on:
         description: Test the APK attached to this GitHub Release instead of building one (e.g. v0.1.0)
         required: false
   workflow_call:
+    inputs:
+      artifact:
+        description: Test the APK in this artifact of the calling run instead of building one
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -26,6 +31,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Download APK from this run
+        if: inputs.artifact != ''
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ inputs.artifact }}
+          path: apk
+
       - name: Download release APK
         if: inputs.release_tag != ''
         env:
@@ -33,23 +45,26 @@ jobs:
           TAG: ${{ inputs.release_tag }}
         run: |
           gh release download "$TAG" --pattern '*.apk' --dir apk
-          echo "APK=$(find apk -name "*.apk" | head -1)" >> "$GITHUB_ENV"
+
+      - name: Locate downloaded APK
+        if: inputs.artifact != '' || inputs.release_tag != ''
+        run: echo "APK=$(find apk -name "*.apk" | head -1)" >> "$GITHUB_ENV"
 
       - uses: actions/setup-java@v6
-        if: inputs.release_tag == ''
+        if: inputs.artifact == '' && inputs.release_tag == ''
         with:
           distribution: temurin
           java-version: '17'
           cache: gradle
 
       - uses: subosito/flutter-action@v2
-        if: inputs.release_tag == ''
+        if: inputs.artifact == '' && inputs.release_tag == ''
         with:
           flutter-version-file: pubspec.yaml
           cache: true
 
       - name: Build release APK
-        if: inputs.release_tag == ''
+        if: inputs.artifact == '' && inputs.release_tag == ''
         run: |
           flutter build apk --release
           echo "APK=build/app/outputs/flutter-apk/app-release.apk" >> "$GITHUB_ENV"

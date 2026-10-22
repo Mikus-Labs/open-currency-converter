@@ -155,8 +155,11 @@ jobs:
 
   smoke:
     name: Android smoke test
-    needs: test
+    needs: android
     uses: ./.github/workflows/android-smoke.yml
+    with:
+      # Tests the APK that ships, rather than building another.
+      artifact: android
 
   ios:
     name: iOS (IPA)
