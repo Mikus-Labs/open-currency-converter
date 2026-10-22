@@ -10,7 +10,7 @@ section 1.
 
 ### 1. Make sure the Android build works
 
-- [ ] **Claude: let the release workflow build Android without iOS.** Tag
+- [x] **Claude: let the release workflow build Android without iOS.** Tag
       builds stop with an error when the iOS signing secrets are missing, and
       the GitHub Release waits for the iOS job. Make the iOS job skip itself
       when there are no iOS secrets, and add an "Android only" option to
@@ -34,10 +34,6 @@ section 1.
   - [ ] the home-screen icon on a round and a squircle launcher
   - [ ] Android 13+ per-app language under system settings
   - [ ] a tablet, if you have one (Android Studio's emulator otherwise)
-- [ ] **Claude: dark launch screen.** The Android launch screen is white even
-      in dark mode, so dark-mode users see a white flash before the app
-      draws. Give it a dark variant, or use the teal background with the
-      icon.
 
 ### 2. Decisions
 

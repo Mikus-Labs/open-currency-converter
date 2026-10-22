@@ -28,10 +28,14 @@ git push origin v1.0.0
     TestFlight after processing, and from there you submit it for review.
 - The `.apk` is for sideloading or stores that take APKs. Play wants the `.aab`.
 
-**Test run:** *Actions → Release → Run workflow* builds without creating a
-release. Without signing secrets it makes a debug-signed APK and an unsigned
-iOS build, which is enough to check the pipeline before store accounts exist.
-Tag builds always require the secrets.
+**Test run:** *Actions → Release → Run workflow* (or
+`gh workflow run release.yml`) builds without creating a release. It builds
+Android only unless you pick `all`, since iOS runs on macOS. Without signing
+secrets it makes a debug-signed APK and an unsigned iOS build, which is enough
+to check the pipeline before store accounts exist.
+
+Tag builds need the Android secrets. They skip iOS until the iOS secrets are
+set, so Google Play can go first.
 
 ## One-time setup: Android
 
