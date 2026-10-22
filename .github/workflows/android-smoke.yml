@@ -4,6 +4,10 @@ name: Android smoke test
 # converter screen appears. Saves the log and a screenshot as an artifact.
 
 on:
+  # Dependency updates (e.g. from Dependabot) can break release builds in ways
+  # unit tests don't see, such as code shrinking removing plugin methods.
+  pull_request:
+    paths: [pubspec.lock, 'android/**']
   workflow_dispatch:
     inputs:
       release_tag:

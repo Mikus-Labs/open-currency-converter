@@ -63,8 +63,16 @@ class AppState extends ChangeNotifier {
   Locale? locale;
 
   Future<void> load() async {
-    final prefs = _prefs ??= await SharedPreferences.getInstance();
     snapshot = await RatesSnapshot.bundled();
+    final SharedPreferences prefs;
+    try {
+      prefs = _prefs ??= await SharedPreferences.getInstance();
+    } catch (e) {
+      // Start without saved settings rather than hang on the launch screen.
+      debugPrint('Settings storage unavailable: $e');
+      notifyListeners();
+      return;
+    }
     final cached = prefs.getString(_ratesKey);
     if (cached != null) {
       try {
