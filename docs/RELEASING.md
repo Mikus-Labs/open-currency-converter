@@ -12,6 +12,10 @@ App ID on both platforms: `co.mikuslabs.openconverter`.
 
 ## Cutting a release
 
+Release tags (`v*`) are protected: once pushed they can't be moved or
+deleted, so check the commit before tagging. A bad release gets a new
+version number.
+
 ```sh
 git tag v1.0.0
 git push origin v1.0.0
