@@ -1,0 +1,74 @@
+name: Android smoke test
+
+# Installs a release APK on an Android emulator, opens it and checks that the
+# converter screen appears. Saves the log and a screenshot as an artifact.
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Test the APK attached to this GitHub Release instead of building one (e.g. v0.1.0)
+        required: false
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Launch on emulator
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download release APK
+        if: inputs.release_tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.release_tag }}
+        run: |
+          gh release download "$TAG" --pattern '*.apk' --dir apk
+          echo "APK=$(find apk -name "*.apk" | head -1)" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-java@v6
+        if: inputs.release_tag == ''
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - uses: subosito/flutter-action@v2
+        if: inputs.release_tag == ''
+        with:
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: Build release APK
+        if: inputs.release_tag == ''
+        run: |
+          flutter build apk --release
+          echo "APK=build/app/outputs/flutter-apk/app-release.apk" >> "$GITHUB_ENV"
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Launch on emulator
+        uses: reactivecircus/android-emulator-runner@v2.38.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          script: scripts/ci/android_smoke.sh "$APK" smoke
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: android-smoke
+          path: smoke/
+          if-no-files-found: ignore
