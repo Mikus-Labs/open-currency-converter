@@ -1,9 +1,9 @@
 # Privacy Policy
 
-**Open Converter** (shown on the home screen as "Converter")
+**Open Currency Converter** (shown on the home screen as "Converter")
 Effective date: 21 October 2026
 
-Open Converter is a currency converter with no ads, no accounts and no
+Open Currency Converter is a currency converter with no ads, no accounts and no
 tracking. This policy explains the little data the app touches.
 
 ## What we collect
