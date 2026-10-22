@@ -5,9 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 /// leaves the donation link out. The web app keeps it, even on iPhones.
 bool get showDonate => kIsWeb || defaultTargetPlatform != TargetPlatform.iOS;
 
-/// Donation page. Placeholder until the Buy Me a Coffee page exists.
-// TODO: replace with the real https://buymeacoffee.com/<name> link.
-final donateUrl = Uri.parse('https://buymeacoffee.com/');
+/// Donation page.
+final donateUrl = Uri.parse('https://buymeacoffee.com/zacharymikus');
 
 /// Opens [url] in the browser. Returns false if nothing could open it.
 Future<bool> openLink(Uri url) async {
