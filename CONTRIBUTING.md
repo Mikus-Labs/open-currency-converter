@@ -47,6 +47,10 @@ dart run tool/l10n.dart   # if you changed an ARB file
 CI runs the same checks on every pull request, and an Android emulator test
 on changes to dependencies or `android/`.
 
+`main` is protected: changes go in through pull requests, which are
+squash-merged once CI passes, and commits must be signed. Security problems
+go to [SECURITY.md](SECURITY.md), not public issues.
+
 Keep changes focused, and match the style of the surrounding code. The app
 has no ads, accounts, analytics or tracking, and contributions must keep it
 that way. New network requests need a good reason and an update to
