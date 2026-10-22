@@ -15,8 +15,7 @@
   (hidden in the iOS app).
 - **Test builds:** v0.1.0 (broken, hangs on launch), v0.2.0 (works; old app
   ID). Both are debug-signed GitHub pre-releases.
-- **Open pull requests:** #2 rating prompt (checks pass, waiting for your
-  OK to merge).
+- **Open pull requests:** none.
 
 ## Before publishing on Google Play
 
@@ -34,8 +33,8 @@ Google Play first, then the App Store (next section). Each item is marked
       the v0.1.0 launch hang (a plugin bug in release builds).
 - [x] **Rates fallback:** jsDelivr first, then `currency-api.pages.dev`, as
       the exchange-api README asks. Tested in `test/rates_test.dart`.
-- [ ] **Claude: v0.3.0 test build** once #2 is merged: the new app ID, the
-      rating prompt and the Ko-fi link. Uninstall v0.2.0 first; Android sees
+- [ ] **Claude: v0.3.0 test build:** the new app ID, the rating prompt and
+      the Ko-fi link. Uninstall v0.2.0 first; Android sees
       the new ID as a different app.
 - [ ] **You: test on an Android phone** (v0.2.0 now, v0.3.0 when it's out):
   - [ ] the keypad, including `000`/`00`, `%` and long-press backspace
@@ -251,7 +250,7 @@ CI runs on macOS for free now that the repo is public.
 
 Ideas and requests. Tick them off as they ship.
 
-- [ ] **Rating prompt** (#2): after 5 minutes of total use, ask once (ever)
+- [x] **Rating prompt:** after 5 minutes of total use, ask once (ever)
       for a store rating with the Play / App Store in-app review dialog. Use
       only counts while the app is on screen, and it waits for a pause in
       typing. The stores decide whether the dialog actually appears, so some
