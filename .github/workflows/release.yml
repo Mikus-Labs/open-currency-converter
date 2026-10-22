@@ -140,14 +140,14 @@ jobs:
             signer="$("$apksigner" verify --print-certs "$apk" | grep -m1 'certificate DN:')"
             echo "$abi APK $signer"
             signers="$signers $signer"
-            cp "$apk" "dist/open-converter-$VERSION-$BUILD_NUMBER-$abi$SUFFIX.apk"
+            cp "$apk" "dist/open-currency-converter-$VERSION-$BUILD_NUMBER-$abi$SUFFIX.apk"
           done
           if [ -n "${ANDROID_KEYSTORE_PATH:-}" ] && [[ "$signers" == *"Android Debug"* ]]; then
             echo "::error::Release build is debug-signed even though a keystore was provided."
             exit 1
           fi
           if [ -z "${SUFFIX:-}" ]; then
-            cp "$aab" "dist/open-converter-$VERSION-$BUILD_NUMBER.aab"
+            cp "$aab" "dist/open-currency-converter-$VERSION-$BUILD_NUMBER.aab"
           fi
           ls -l dist
 
@@ -275,7 +275,7 @@ jobs:
           flutter build ipa --release --build-name "$VERSION" --build-number "$BUILD_NUMBER" \
             --export-options-plist="$RUNNER_TEMP/ExportOptions.plist"
           mkdir -p dist
-          cp build/ios/ipa/*.ipa "dist/open-converter-$VERSION-$BUILD_NUMBER.ipa"
+          cp build/ios/ipa/*.ipa "dist/open-currency-converter-$VERSION-$BUILD_NUMBER.ipa"
           ls -l dist
 
       - name: Unsigned test build

@@ -47,14 +47,14 @@ set, so Google Play can go first.
 1. **Create an upload key** and keep it backed up, e.g. in a password manager:
 
    ```sh
-   keytool -genkeypair -v -keystore ~/open-converter-upload.jks \
+   keytool -genkeypair -v -keystore ~/open-currency-converter-upload.jks \
      -alias upload -keyalg RSA -keysize 4096 -validity 10000
    ```
 
 2. **Add the secrets** (Settings → Secrets and variables → Actions, or `gh`):
 
    ```sh
-   base64 -i ~/open-converter-upload.jks | gh secret set ANDROID_KEYSTORE_BASE64
+   base64 -i ~/open-currency-converter-upload.jks | gh secret set ANDROID_KEYSTORE_BASE64
    gh secret set ANDROID_KEYSTORE_PASSWORD   # keystore password
    gh secret set ANDROID_KEY_ALIAS --body upload
    gh secret set ANDROID_KEY_PASSWORD        # key password (same as keystore if you only set one)
@@ -65,7 +65,7 @@ set, so Google Play can go first.
    one is only your *upload* key, so it can be reset if lost.
 
 For a local signed build, export the same variables, with
-`ANDROID_KEYSTORE_PATH=~/open-converter-upload.jks`, and run
+`ANDROID_KEYSTORE_PATH=~/open-currency-converter-upload.jks`, and run
 `flutter build appbundle`. Without them, release builds use debug keys.
 
 ## One-time setup: iOS
@@ -104,7 +104,7 @@ a year; renew them and update the two base64 secrets.
   Store listing either. Google Play doesn't require Play Billing for donations.
 - **Privacy policy URL:** both stores require one. The policy is
   [`PRIVACY.md`](../PRIVACY.md), published with GitHub Pages at
-  <https://mikus-labs.github.io/open-converter/PRIVACY>.
+  <https://mikus-labs.github.io/open-currency-converter/PRIVACY>.
 - **Privacy forms:** the app collects no data and has no ads or tracking, so
   Play *Data safety* is "No data collected" and App Store *App Privacy* is
   "Data Not Collected". Export compliance is pre-answered:

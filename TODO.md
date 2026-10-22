@@ -62,18 +62,19 @@ the listing and policy should point at the final repo address.
       secrets or keys in the git history, no material from other apps, one
       author (GitHub no-reply email), MIT licence. Added `CONTRIBUTING.md`
       and issue templates for bugs and translations.
-- [ ] **You: transfer** the repo to the `Mikus-Labs` organisation
-      (Settings → General → Transfer ownership; note the hyphen). GitHub
-      redirects the old URLs, including existing release links.
-- [ ] **Claude: update links** to the new address in the privacy policy
+- [x] **Transfer** to the `Mikus-Labs` organisation, renamed
+      `open-currency-converter`. GitHub redirects the old URLs, including
+      existing release links.
+- [x] **Claude: update links** to the new address in the privacy policy
       (contact link), `docs/RELEASING.md` (privacy URL) and the README. Re-add
       repo settings that don't move with it: Dependabot security updates
       and the Actions caches (they rebuild on the first run).
-- [ ] **You: make it public** (Settings → General → Danger Zone → Change
+- [x] **Make it public** (Settings → General → Danger Zone → Change
       visibility). This can't be quietly undone: forks and clones made while
       it's public stay out there.
-- [ ] **Claude: privacy policy page.** GitHub Pages is free for public repos;
-      publish `PRIVACY.md` there, or link straight to the file on GitHub.
+- [x] **Privacy policy page:**
+      <https://mikus-labs.github.io/open-currency-converter/PRIVACY>, built by
+      GitHub Pages from `PRIVACY.md`.
 - [ ] **Add the signing secrets after the move** (section 3), so they're
       created in the right place.
 
