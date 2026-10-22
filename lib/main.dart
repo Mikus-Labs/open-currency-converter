@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_state.dart';
 import 'l10n/l10n.dart';
+import 'review_prompt.dart';
 import 'screens/converter_screen.dart';
 
 Future<void> main() async {
@@ -22,16 +23,26 @@ class ConverterApp extends StatefulWidget {
 
 class _ConverterAppState extends State<ConverterApp> {
   late final AppLifecycleListener _lifecycle;
+  late final ReviewPrompt _review = ReviewPrompt(widget.state);
 
   @override
   void initState() {
     super.initState();
     widget.state.refreshIfStale();
-    _lifecycle = AppLifecycleListener(onResume: widget.state.refreshIfStale);
+    if (ReviewPrompt.supported) _review.start();
+    _lifecycle = AppLifecycleListener(
+      onResume: widget.state.refreshIfStale,
+      // Only time on screen counts towards the rating prompt.
+      onShow: () {
+        if (ReviewPrompt.supported) _review.start();
+      },
+      onHide: _review.stop,
+    );
   }
 
   @override
   void dispose() {
+    _review.stop();
     _lifecycle.dispose();
     super.dispose();
   }

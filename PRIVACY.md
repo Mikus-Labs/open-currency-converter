@@ -34,6 +34,13 @@ makes no other network requests.
 app itself sends nothing; anything you do on that page is covered by Ko-fi's
 privacy policy.
 
+## Rating prompt
+
+After about five minutes of total use, the app asks Google Play or the App
+Store, once, to show its rating dialog. The app counts that time on your
+device and sends nothing; any rating or review you leave goes to the store
+under its own privacy policy.
+
 ## Clipboard and sharing
 
 The app reads the clipboard only when you choose **Paste**, and writes to it
@@ -57,5 +64,5 @@ with a new effective date.
 
 ## Contact
 
-Questions about this policy can be raised at
+Questions about this policy: email <dev@mikuslabs.co>, or open an issue at
 <https://github.com/Mikus-Labs/open-currency-converter/issues>.

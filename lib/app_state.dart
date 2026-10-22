@@ -62,6 +62,13 @@ class AppState extends ChangeNotifier {
   /// App language, or null to follow the device.
   Locale? locale;
 
+  /// Total time the app has been on screen, for the one-time rating prompt.
+  Duration usage = Duration.zero;
+  bool reviewRequested = false;
+
+  /// Last keypad press, so the rating prompt doesn't interrupt typing.
+  DateTime? lastInteraction;
+
   Future<void> load() async {
     snapshot = await RatesSnapshot.bundled();
     final SharedPreferences prefs;
@@ -113,6 +120,8 @@ class AppState extends ChangeNotifier {
     currencyFilter = CurrencyFilter.values.asNameMap()[json['currencyFilter']] ?? CurrencyFilter.all;
     themeMode = ThemeMode.values[json['themeMode'] as int? ?? 0];
     locale = AppLocalizations.supportedLocales.where((l) => l.toLanguageTag() == json['locale']).firstOrNull;
+    usage = Duration(seconds: json['usageSeconds'] as int? ?? 0);
+    reviewRequested = json['reviewRequested'] as bool? ?? false;
   }
 
   void _save() {
@@ -131,6 +140,8 @@ class AppState extends ChangeNotifier {
         'currencyFilter': currencyFilter.name,
         'themeMode': themeMode.index,
         'locale': locale?.toLanguageTag(),
+        'usageSeconds': usage.inSeconds,
+        'reviewRequested': reviewRequested,
       }),
     );
   }
@@ -210,6 +221,7 @@ class AppState extends ChangeNotifier {
   }
 
   void press(String key) {
+    lastInteraction = DateTime.now();
     if (haptics) HapticFeedback.selectionClick();
     if (key == '=') {
       final value = calc.evaluate(expr);
@@ -337,6 +349,17 @@ class AppState extends ChangeNotifier {
   void setThemeMode(ThemeMode mode) {
     themeMode = mode;
     _changed();
+  }
+
+  /// Counts time on screen. Saved every 30 s rather than every second.
+  void addUsage(Duration value) {
+    usage += value;
+    if (usage.inSeconds % 30 == 0) _save();
+  }
+
+  void markReviewRequested() {
+    reviewRequested = true;
+    _save();
   }
 
   void setLocale(Locale? value) {

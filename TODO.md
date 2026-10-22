@@ -45,8 +45,8 @@ section 1.
       mikuslabs.co domain. It can never change after the first upload.
 - [ ] **You: privacy policy URL.** Settled by open sourcing (section 2b):
       GitHub Pages or the file on GitHub.
-- [ ] **You: support email.** Play shows a contact email publicly on the
-      listing. Consider a separate address rather than your personal one.
+- [x] **Support email:** dev@mikuslabs.co, shown on the Play listing and
+      in the privacy policy.
 - [ ] **You: launch languages.** Ship all 8 machine-translated languages,
       get them reviewed first, or launch in English and enable the rest
       after review (removing an ARB file and running `tool/l10n.dart`
@@ -162,6 +162,16 @@ that build iOS (10× the cost of Linux on a private repo).
       screenshots and App Privacy. See
       [docs/RELEASING.md](docs/RELEASING.md#one-time-setup-ios). The
       donation link is already hidden on iOS.
+
+## Features
+
+Ideas and requests. Tick them off as they ship.
+
+- [x] **Rating prompt:** after 5 minutes of total use, ask once (ever) for a
+      store rating with the Play / App Store in-app review dialog. Use only
+      counts while the app is on screen, and it waits for a pause in typing.
+      The stores decide whether the dialog actually appears (Play limits how
+      often), so some users never see it.
 
 ## Localisation
 
