@@ -13,8 +13,9 @@
 - **Privacy policy:** <https://mikus-labs.github.io/open-currency-converter/PRIVACY>
 - **Support email:** dev@mikuslabs.co. **Donations:** <https://ko-fi.com/mikuslabs>
   (hidden in the iOS app).
-- **Test builds:** v0.1.0 (broken, hangs on launch), v0.2.0 (works; old app
-  ID). Both are debug-signed GitHub pre-releases.
+- **Test builds** (debug-signed GitHub pre-releases): v0.1.0 (broken, hangs
+  on launch), v0.2.0 (old app ID), **v0.3.0** (current: new app ID, rating
+  prompt, Ko-fi, split APKs).
 - **Open pull requests:** none.
 
 ## Before publishing on Google Play
@@ -33,10 +34,10 @@ Google Play first, then the App Store (next section). Each item is marked
       the v0.1.0 launch hang (a plugin bug in release builds).
 - [x] **Rates fallback:** jsDelivr first, then `currency-api.pages.dev`, as
       the exchange-api README asks. Tested in `test/rates_test.dart`.
-- [ ] **Claude: v0.3.0 test build:** the new app ID, the rating prompt and
-      the Ko-fi link. Uninstall v0.2.0 first; Android sees
+- [x] **v0.3.0 test build:** the new app ID, the rating prompt and the
+      Ko-fi link. Uninstall v0.2.0 first; Android sees
       the new ID as a different app.
-- [ ] **You: test on an Android phone** (v0.2.0 now, v0.3.0 when it's out):
+- [ ] **You: test v0.3.0 on an Android phone** (uninstall v0.2.0 first):
   - [ ] the keypad, including `000`/`00`, `%` and long-press backspace
   - [ ] keypad vibration
   - [ ] adding, removing and reordering currencies
@@ -169,14 +170,14 @@ CI runs on macOS for free now that the repo is public.
 
 ### 2. Make the iOS app store-ready (Claude)
 
-- [ ] **Privacy manifest** (`ios/Runner/PrivacyInfo.xcprivacy`): required by
+- [x] **Privacy manifest** (`ios/Runner/PrivacyInfo.xcprivacy`): required by
       Apple since May 2024. Declare no tracking, no collected data, and the
       reason for using `UserDefaults` (settings storage, reason `CA92.1`).
-- [ ] **Dark launch screen:** the iOS launch screen is plain white, a flash
+- [x] **Dark launch screen:** the iOS launch screen is plain white, a flash
       in dark mode. Use the system background colour so it follows the
       theme.
-- [ ] **Unsigned iOS build in CI** (*Run workflow* → `all`) to prove the
-      project builds on Xcode before any signing exists.
+- [x] **Unsigned iOS build in CI** (*Run workflow* → `all`): builds on
+      Xcode (17.9 MB app, no warnings beyond the missing signing).
 - [x] **Already done:** export compliance (`ITSAppUsesNonExemptEncryption`
       is false), icon without transparency, all iPad orientations, the
       language list in `Info.plist`, Ko-fi link hidden (guideline 3.1.1),
