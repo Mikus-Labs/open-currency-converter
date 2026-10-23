@@ -11,6 +11,21 @@ out="$2"
 pkg=co.mikuslabs.openconverter
 mkdir -p "$out"
 
+# Runs a command, killing it after $1 seconds: adb commands can hang forever
+# on an unhealthy emulator.
+run_for() {
+  local secs="$1"
+  shift
+  "$@" &
+  local pid=$!
+  (sleep "$secs" && kill "$pid" 2> /dev/null) &
+  local watcher=$!
+  wait "$pid"
+  local status=$?
+  kill "$watcher" 2> /dev/null
+  return "$status"
+}
+
 adb install -r "$apk" || exit 1
 adb logcat -c
 adb shell am start -n "$pkg/.MainActivity" > /dev/null
@@ -20,8 +35,8 @@ adb shell am start -n "$pkg/.MainActivity" > /dev/null
 shown=0
 for _ in $(seq 1 20); do
   sleep 3
-  if adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 \
-    && adb pull /sdcard/ui.xml "$out/ui.xml" > /dev/null 2>&1 \
+  if run_for 15 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 \
+    && run_for 15 adb pull /sdcard/ui.xml "$out/ui.xml" > /dev/null 2>&1 \
     && grep -q 'text="="\|content-desc="="' "$out/ui.xml"; then
     shown=1
     break
@@ -29,9 +44,9 @@ for _ in $(seq 1 20); do
 done
 sleep 2 # let startup errors reach the log
 
-adb exec-out screencap -p > "$out/screen.png"
-adb logcat -d > "$out/logcat.txt"
-pid="$(adb shell pidof "$pkg" || true)"
+run_for 15 adb exec-out screencap -p > "$out/screen.png"
+run_for 30 adb logcat -d > "$out/logcat.txt"
+pid="$(run_for 15 adb shell pidof "$pkg" || true)"
 
 echo "::group::App log"
 grep -E "flutter|AndroidRuntime|$pkg|${pid:-no-pid}" "$out/logcat.txt" | tail -200
