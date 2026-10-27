@@ -4,8 +4,9 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Release signing comes from the environment so the upload key never lives in
-// the repo. CI sets these from GitHub secrets; see docs/RELEASING.md.
+// Release signing comes from the environment so the signing key never lives in
+// the repo. CI sets these from the `release` environment's secrets; see
+// docs/RELEASING.md.
 val releaseKeystore = System.getenv("ANDROID_KEYSTORE_PATH")?.takeIf { it.isNotBlank() }
 
 android {

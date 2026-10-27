@@ -16,6 +16,9 @@
 - **Test builds** (debug-signed GitHub pre-releases): v0.1.0 (broken, hangs
   on launch), v0.2.0 (old app ID), **v0.3.0** (current: new app ID, rating
   prompt, Ko-fi, split APKs).
+- **Signing:** our own app signing key, kept in 1Password and in the
+  `release` environment, which only `v*` tags can use. Play installs and
+  GitHub APKs share the signature.
 - **Open pull requests:** none.
 
 ## Before publishing on Google Play
@@ -37,51 +40,37 @@ Google Play first, then the App Store (next section). Each item is marked
 - [x] **v0.3.0 test build:** the new app ID, the rating prompt and the
       Ko-fi link. Uninstall v0.2.0 first; Android sees
       the new ID as a different app.
-- [ ] **You: test v0.3.0 on an Android phone** (uninstall v0.2.0 first):
-  - [ ] the keypad, including `000`/`00`, `%` and long-press backspace
-  - [ ] keypad vibration
-  - [ ] adding, removing and reordering currencies
-  - [ ] the currency picker filter (All / No crypto / Crypto only) and tags
-  - [ ] own rates
-  - [ ] the rates download over Wi-Fi and mobile data
-  - [ ] offline start in airplane mode
-  - [ ] Copy, Paste and Share
-  - [ ] the Ko-fi link (v0.3.0)
-  - [ ] switching language in Settings, including Arabic right-to-left
-  - [ ] dark mode
-  - [ ] landscape
-  - [ ] the home-screen icon on a round and a squircle launcher
-  - [ ] Android 13+ per-app language under system settings
-  - [ ] a tablet, if you have one (Android Studio's emulator otherwise)
+- [x] **You: test v0.3.0 on an Android phone**: keypad, vibration,
+      currencies, filter, own rates, rates download, offline start, Copy,
+      Paste and Share, Ko-fi, languages including Arabic, dark mode,
+      landscape, icon, per-app language.
 
 ### 2. Decisions
 
 - [x] **App name, app ID, privacy policy URL, support email** (see Status).
-- [ ] **You: launch languages.** Ship all 8 machine-translated languages,
-      get them reviewed first, or launch in English and enable the rest
-      after review (removing an ARB file and running `tool/l10n.dart`
-      removes a language).
-- [ ] **You: app signing key.** When creating the app in Play Console,
-      either let Google hold the signing key (the default; the upload key
-      can be reset if lost), or upload your own so GitHub APKs and Play
-      installs can update each other (lose it and the app can never be
-      updated again). Chosen once, when the app is created.
+- [x] **Launch languages:** all 8 (English, German, Russian, French,
+      Spanish, Thai, Arabic, Chinese). They're machine-translated, so ask
+      testers who speak them to read through the app and the listing.
+- [x] **App signing key: our own**, uploaded to Play App Signing. Play
+      installs and GitHub APKs carry the same signature, so people can
+      switch between them without uninstalling. The key is in 1Password
+      and in the `release` environment; Google holds a copy.
 
 ### 3. Play Console account and signing (you)
 
-- [ ] **Create a personal developer account** at
-      play.google.com/console ($25, once). Google verifies your identity
-      with a government ID, which can take a few days. New accounts must
-      also verify that they have an Android device, via the Play Console
-      mobile app.
-- [ ] **Create the upload key** and add the four `ANDROID_*` secrets. See
-      [docs/RELEASING.md](docs/RELEASING.md#one-time-setup-android). Back
-      up the `.jks` and its password, e.g. in a password manager.
-- [ ] **Claude: keep the signing secrets in a `release` environment** that
+- [x] **Create a personal developer account** (verified).
+- [x] **Claude: keep the signing secrets in a `release` environment** that
       only `v*` tag builds can use, so no other branch or workflow can read
-      them. Needs a small change to `release.yml`.
+      them.
+- [ ] **Create the signing key** and add the secrets to the `release`
+      environment. See
+      [docs/RELEASING.md](docs/RELEASING.md#one-time-setup-android). Back
+      up the `.jks` and its password in 1Password.
 - [ ] **Create the app** in Play Console: free (a free app can never become
       paid), app, default language English (en-US).
+- [ ] **Upload the signing key to Play App Signing** *before* uploading the
+      first `.aab`. Otherwise Play generates its own key and the choice
+      above is lost. Steps in docs/RELEASING.md.
 
 ### 4. Store listing (Claude drafts, you approve)
 
@@ -97,7 +86,7 @@ Google Play first, then the App Store (next section). Each item is marked
 - [ ] **Category: Tools.** Finance invites extra scrutiny. Add tags.
 - [ ] **Contact details:** dev@mikuslabs.co; website mikuslabs.co or the
       GitHub repo.
-- [ ] **Translated listings** for the launch languages (optional).
+- [ ] **Translated listings** for all 8 launch languages.
 
 ### 5. Play Console forms (you fill them in; the answers are below)
 
@@ -126,7 +115,7 @@ Google Play first, then the App Store (next section). Each item is marked
       device checks from section 1.
 - [ ] **Closed testing: at least 12 testers opted in for 14 days in a
       row.** New personal accounts can't publish to production without this.
-      Start recruiting friends and family now; each needs a Google account
+      You're recruiting now (friends and family); each needs a Google account
       and must keep the app installed. Push at least one update during the
       14 days, since Google asks about tester feedback.
 - [ ] **Apply for production access** in Play Console (a short

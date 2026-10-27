@@ -48,29 +48,80 @@ set, so Google Play can go first.
 
 ## One-time setup: Android
 
-1. **Create an upload key** and keep it backed up, e.g. in a password manager:
+The app uses **our own app signing key**, and Google holds a copy for Play
+App Signing. Play installs and the GitHub APKs carry the same signature, so
+people can move between them without uninstalling. The same key signs the
+`.aab` we upload, so it's the upload key too.
+
+The key lives in 1Password and, for CI, in the `release` **environment**
+(Settings → Environments), which only `v*` tag builds can use. Other
+branches, pull requests and manual runs can't read it.
+
+If the key is ever lost, Play keeps working because Google has a copy. But
+GitHub APKs would need a new key, so people who installed one would have to
+uninstall. Keep the backup.
+
+1. **Create the key** on your Mac. `keytool` comes with Android Studio's
+   Java. It asks for a password: generate a long one in 1Password.
 
    ```sh
-   keytool -genkeypair -v -keystore ~/open-currency-converter-upload.jks \
-     -alias upload -keyalg RSA -keysize 4096 -validity 10000
+   export PATH="/Applications/Android Studio.app/Contents/jbr/Contents/Home/bin:$PATH"
+   keytool -genkeypair -v -keystore ~/Desktop/open-currency-converter.jks \
+     -storetype PKCS12 -alias openconverter -keyalg RSA -keysize 4096 \
+     -validity 10000 -dname "CN=Mikus Labs, O=Mikus Labs"
+   keytool -list -v -keystore ~/Desktop/open-currency-converter.jks | grep SHA256
    ```
 
-2. **Add the secrets** (Settings → Secrets and variables → Actions, or `gh`):
+   The name in `-dname` is public: it's in every APK's certificate.
+   `-validity 10000` is about 27 years; Play needs a key valid past 2033.
+
+2. **Back it up:** a new 1Password item with the `.jks` file attached, its
+   password, the alias `openconverter` and the SHA-256 fingerprint.
+
+3. **Add it to the `release` environment.** `gh secret set` prompts for the
+   password without echoing it. PKCS12 keystores have one password, so the
+   store and key passwords are the same:
 
    ```sh
-   base64 -i ~/open-currency-converter-upload.jks | gh secret set ANDROID_KEYSTORE_BASE64
-   gh secret set ANDROID_KEYSTORE_PASSWORD   # keystore password
-   gh secret set ANDROID_KEY_ALIAS --body upload
-   gh secret set ANDROID_KEY_PASSWORD        # key password (same as keystore if you only set one)
+   R=Mikus-Labs/open-currency-converter
+   base64 -i ~/Desktop/open-currency-converter.jks | gh secret set ANDROID_KEYSTORE_BASE64 --env release -R $R
+   gh secret set ANDROID_KEYSTORE_PASSWORD --env release -R $R
+   gh secret set ANDROID_KEY_PASSWORD --env release -R $R
+   gh secret set ANDROID_KEY_ALIAS --env release -R $R --body openconverter
+   gh variable set ANDROID_CERT_SHA256 --env release -R $R --body "AB:CD:…"   # from step 1
    ```
 
-3. **Play Console** ($25 one-time): create the app and keep *Play App Signing*
-   on, which is the default. Google then holds the real signing key and this
-   one is only your *upload* key, so it can be reset if lost.
+   With `ANDROID_CERT_SHA256` set, a release fails if the APKs are signed
+   with any other key. The fingerprint isn't secret; it's printed on every
+   build.
 
-For a local signed build, export the same variables, with
-`ANDROID_KEYSTORE_PATH=~/open-currency-converter-upload.jks`, and run
+4. **Upload the key to Play App Signing**, before uploading any `.aab`. If
+   you upload a bundle first and accept the default, Google generates its
+   own key and the APKs won't match. In Play Console, open the app →
+   *Test and release* → *App integrity* → *App signing* (or the signing
+   prompt on your first release). Choose to **export and upload a key from
+   a Java keystore**, download the PEPK tool and encryption key it offers,
+   run the `java -jar pepk.jar …` command it shows against the `.jks` above,
+   and upload the resulting `.zip`. Skip the optional separate upload key:
+   it would sit in the same `release` environment, so it adds nothing.
+
+5. **Delete `~/Desktop/open-currency-converter.jks`** once 1Password,
+   GitHub and Play have it.
+
+For a local signed build, save the `.jks` from 1Password, set
+`ANDROID_KEYSTORE_PATH` to it plus `ANDROID_KEYSTORE_PASSWORD`,
+`ANDROID_KEY_ALIAS` and `ANDROID_KEY_PASSWORD`, then run
 `flutter build appbundle`. Without them, release builds use debug keys.
+
+The `release` environment was created with:
+
+```sh
+gh api -X PUT repos/Mikus-Labs/open-currency-converter/environments/release \
+  -F 'deployment_branch_policy[protected_branches]=false' \
+  -F 'deployment_branch_policy[custom_branch_policies]=true'
+gh api -X POST repos/Mikus-Labs/open-currency-converter/environments/release/deployment-branch-policies \
+  -f name='v*' -f type=tag
+```
 
 ## One-time setup: iOS
 
@@ -88,12 +139,13 @@ Needs the [Apple Developer Program](https://developer.apple.com/programs/)
 3. **Provisioning profile:** Profiles → **+** → *App Store Connect* → pick the
    App ID and the certificate → download the `.mobileprovision`.
 4. **App Store Connect:** My Apps → **+** → New App, with the same bundle ID.
-5. **Secrets:**
+5. **Secrets**, in the `release` environment like the Android ones:
 
    ```sh
-   base64 -i dist.p12 | gh secret set IOS_DISTRIBUTION_CERTIFICATE_BASE64
-   gh secret set IOS_DISTRIBUTION_CERTIFICATE_PASSWORD
-   base64 -i Converter_App_Store.mobileprovision | gh secret set IOS_PROVISIONING_PROFILE_BASE64
+   R=Mikus-Labs/open-currency-converter
+   base64 -i dist.p12 | gh secret set IOS_DISTRIBUTION_CERTIFICATE_BASE64 --env release -R $R
+   gh secret set IOS_DISTRIBUTION_CERTIFICATE_PASSWORD --env release -R $R
+   base64 -i Converter_App_Store.mobileprovision | gh secret set IOS_PROVISIONING_PROFILE_BASE64 --env release -R $R
    ```
 
 The workflow reads the team ID and profile name from the profile itself and
